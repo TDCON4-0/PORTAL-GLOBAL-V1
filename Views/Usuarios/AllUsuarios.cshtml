@@ -1,0 +1,224 @@
+﻿
+@{
+    Layout = null;
+}
+
+<div class="x_panel" id="divCatalogoUsuarios">
+    <div class="x_title">
+        <h2>Users </h2>
+        <div class="clearfix"></div>
+    </div>
+    <div class="x_content">
+        <div class="text-right">
+            <button id="seeAll"  class="btn btn-warning" type="button">
+                <span id="icono"
+                      class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> SEE ALL
+            </button>
+            <!--You can add col-lg-12 if you want -->
+            <button type="button" class="btn btn-primary "
+                    onclick="javascript:UpdateContenedor('Usuarios/NewUsuario');">
+                <span class="glyphicon glyphicon-plus" id="icon_enabled"
+                      style="color:white;"></span> NEW USER
+            </button>
+        </div>
+        <div class="col-md-12 col-sm-12 ">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>Users Table</h2>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="card-box table-responsive">
+                                <table id="example" class="table table-striped table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">ID</th>
+                                            <th scope="col">Name</th>
+                                            <th scope="col">Telephone</th>
+                                            <th scope="col">Correo</th>
+                                            <th scope="col">Status</th>
+                                            <th scope="col">Company</th>
+                                            <th scope="col">Department</th>
+                                            <th scope="col">Manager</th>
+                                            <th scope="col">Tag1</th>
+                                            <th scope="col">Tag2</th>
+                                            <th scope="col">Edit</th>
+                                            <th scope="col">Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="ConternidoTabla">
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var tablaSystems;
+
+    $(document).ready(function () {
+        tablaSystems = $('#example').DataTable();
+        GetSystems("1");
+
+    });
+    var objUsers = [];
+    var datosUsuarios;
+    var statusUsuarios = "";
+    function GetSystems(All) {
+        datosUsuarios = "";
+        var parametros = {
+            "Status": All
+        };
+        var sURL = IPWS + "Usuarios/getUsuariosAll";
+        $.ajax({
+            url: sURL,
+            dataType: "json",
+            type: "GET",
+            async: false,
+            data: parametros,
+            success: function (data) {
+                if (data.Status == "ERROR"  ) {
+                   Swal.fire('Error!', data.Mensaje, 'error');
+                } else {
+                    datosUsuarios = data;
+                    //tablaSystems.clear();
+                    tablaSystems.clear();
+
+                    if (datosUsuarios[0].Status == null) {
+
+                    } else {
+                        
+                        for (var i = 0; i < datosUsuarios.length; i++) {
+                            var htmlboton = "javascript:UpdateContenedor('Usuarios/EditarUsuario?tag=" + datosUsuarios[i].ID + "')";
+                            var TextoStatus;
+                            var colorBotonStatus;
+
+                            if (datosUsuarios[i].Status == true || datosUsuarios[i].Status == "1") {
+                                TextoStatus = "DISABLED";
+                                colorBotonStatus = 'btn btn-danger';
+
+                            } else {
+                                TextoStatus = "ENABLED";
+                                colorBotonStatus = 'btn btn-success';
+                            }
+
+
+                            if (datosUsuarios[i].Status == "1") {
+                                statusUsuarios = "ENABLED";
+                            } else {
+                                statusUsuarios = "DISABLED";
+                            }
+                            
+
+
+                            tablaSystems.row.add([
+                                String(((datosUsuarios[i].ID == "" || datosUsuarios[i].ID == null) ? "" : datosUsuarios[i].ID)),
+                                String(((datosUsuarios[i].Nombre == "" || datosUsuarios[i].Nombre == null) ? "" : datosUsuarios[i].Nombre)),
+                                String(((datosUsuarios[i].Telefono == "" || datosUsuarios[i].Telefono == null) ? "" : datosUsuarios[i].Telefono)),
+                                String(((datosUsuarios[i].Correo == "" || datosUsuarios[i].Correo == null) ? "" : datosUsuarios[i].Correo)),
+                                String(((statusUsuarios == "" || statusUsuarios == null) ? "" : statusUsuarios)),
+                                String(((datosUsuarios[i].Compania == "" || datosUsuarios[i].Compania == null) ? "" : datosUsuarios[i].Compania)),
+                                String(((datosUsuarios[i].Departamento == "" || datosUsuarios[i].Departamento == null) ? "" : datosUsuarios[i].Departamento)),
+                                String(((datosUsuarios[i].Manager == "" || datosUsuarios[i].Manager == null) ? "" : datosUsuarios[i].Manager)),
+                                String(((datosUsuarios[i].Tag1 == "" || datosUsuarios[i].Tag1 == null) ? "" : datosUsuarios[i].Tag1)),
+                                String(((datosUsuarios[i].Tag2 == "" || datosUsuarios[i].Tag2 == null) ? "" : datosUsuarios[i].Tag2)),
+                                String('<a href=' + htmlboton + ' type="button" class="btn btn-primary waves-effect waves-light" id="botonModificar" ><span class="btn-label"><i class="fa fa-check"></i></span>Edit</a>'),
+                                String('<a type="button" class="' + colorBotonStatus + '" onclick="DeleteSystem(' + datosUsuarios[i].ID + ',' + datosUsuarios[i].Status + ');"><span class="btn-label"><i class="fa fa-times"></i></span>' + TextoStatus + '</a>'),
+                            ]);
+                        }
+                        tablaSystems.column('1:visible').order('desc').draw();
+                    }
+
+                    }
+
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+            }
+        });
+    }
+
+
+    function DeleteSystem(ID, Status) {
+        var cambioStatus;
+        var ID = ID;
+        var TextoStatus;
+        if (Status == "1") {
+            cambioStatus = "0";
+            TextoStatus = "DISABLED";
+        } else {
+            cambioStatus = "1";
+            TextoStatus = "ENABLED";
+        }
+        var para = {
+            "Id": ID,
+            "Status": cambioStatus,
+
+        };
+        swal.fire({
+            title: "ARE YOU SURE",
+            text: "YOU WANT TO " + TextoStatus + " THIS USER?",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+            .then((willDelete) => {
+                if (willDelete) {
+                    var sURL = IPWS + "/Usuarios/updateStatusUusarios";
+                    $.ajax({
+                        url: sURL,
+                        dataType: "json",
+                        type: "POST",
+                        async: false,
+                        data: para,
+                        success: function (data) {
+                            if (data.Status == "OK") {
+                                swal.fire("OK! THE SYSTEM " + TextoStatus + "  SUCCESSFULLY!", {
+                                    icon: "success",
+                                });
+                                tablaSystems.clear().draw();
+                                GetSystems("1");
+                                ocultarelementos = 0;
+                            } else {
+                                swal.fire("Error", "ERROR " + TextoStatus + "  DATA", "error");
+                            }
+                        },
+                        error: function (XMLHttpRequest, textStatus, errorThrown) {
+
+                        }
+                    });
+                } else {
+                    swal.fire("WITHOUT CHANGES!");
+                }
+            });
+    }
+
+
+
+    var ocultarelementos = 0;
+    $('#seeAll').click(function () {
+
+        if (ocultarelementos == 0) {
+
+            $("#icono").removeClass("glyphicon glyphicon-eye-open");
+            $("#icono").addClass("glyphicon glyphicon-eye-close");
+            GetSystems("0");
+            ocultarelementos = 1;
+
+        } else {
+
+
+            $("#icono").removeClass("glyphicon glyphicon-eye-close");
+            $("#icono").addClass("glyphicon glyphicon-eye-open");
+            GetSystems("1");
+            ocultarelementos = 0;
+        }
+
+    });
+</script>

@@ -1,0 +1,228 @@
+﻿
+@{
+    
+    Layout =null ;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>LoginPortal</title>
+</head>
+<style>
+    .login100-form-title-1 {
+        position: absolute;
+        top: 75px;
+        font-family: Poppins-Bold;
+        font-size: 30px;
+        color: #fff;
+        text-transform: uppercase;
+        line-height: 1.2;
+        text-align: center;
+    }
+
+    .login-box .avatar {
+        width: 47px;
+        height: 62px;
+        border-radius: 50%;
+        position: absolute;
+        top: 10px;
+        left: calc(61% - 95px);
+    }
+
+    .login-box input[type="submit"] {
+        border: none;
+        outline: none;
+        height: 40px;
+        background: #ffffff;
+        color: black;
+        font-size: 18px;
+        border-radius: 20px;
+    }
+
+        .login-box input[type="submit"]:hover {
+            cursor: pointer;
+            background: #3397c9;
+            color: black;
+        }
+
+    .login100-form-title::before {
+        content: "";
+        display: block;
+        position: absolute;
+        z-index: -1;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        background-color: rgb(0 0 0 / 70%);
+    }
+    
+</style>
+<body>
+    <link href="~/Content/LoginPortal.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/util.css" rel="stylesheet" />
+    <link href="~/Content/main.css" rel="stylesheet" />
+    <link href="~/Content/plugins/fontawesome-free/css/all.css" rel="stylesheet" />
+    <link href="~/Content/dist/css/adminlte.css" rel="stylesheet" />
+
+    <link rel="shortcut icon" type="image/png" href="~/Content/image/BMW_White_Logo.ico">
+    <!------ Include the above in your HEAD tag ---------->
+    <div class="limiter">
+        <div class="container-login100">
+
+            <div class="wrap-login100">
+                <div class="login100-form-title" style="        background-image: url(/Content/image/ScreenServer.gif);">
+                    <span class="login100-form-title-1">
+                        Sign In
+                    </span>
+                    <div class="login-box">
+                        <img src="~/Content/image/BMW_White-Colour_RGB.svg" class="avatar" alt="Avatar Image">
+
+                    </div>
+                </div>
+                <div id="msgs"></div>
+                <div class="progress">
+                    <div id="barraProgreso" class="progress-bar progress-bar-striped progress-bar-animated bg-success" style="display:none; height: 2rem;" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 0%"></div>
+                </div>
+                <form class="login100-form validate-form">
+
+                    <div class="wrap-input100 validate-input m-b-26" data-validate="Username is required">
+                        <span class="label-input100">Username</span>
+                        <input class="input100" type="text" name="username" id="UserName" placeholder="Enter username" value="Admin">
+                        <span class="focus-input100"></span>
+                    </div>
+
+                    <div class="wrap-input100 validate-input m-b-18" data-validate="Password is required">
+                        <span class="label-input100">Password</span>
+                        <input class="input100" type="password" name="pass" id="Password" placeholder="Enter password" value="Admin">
+                        <span class="focus-input100"></span>
+                    </div>
+
+                    <div class="container-login100-form-btn">
+                        <button value="Login" type="button" class="login100-form-btn" onclick="IniciarSesion();"
+                                style="  background-color: rgb(3, 118, 235); cursor: pointer; margin-left: 21%;">
+                            Login
+                        </button>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+   
+</body>
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script type="text/javascript">
+//var IPWS="http://localhost:52203";
+var pass = "";
+var email = "";
+var user = "";
+let msj;
+var usuario;
+
+function IniciarSesion() {
+
+    $('#msgs').empty();
+    $('#barraProgreso').show();
+    $('#barraProgreso').css("width", "10%");
+    username = document.getElementById("UserName").value;
+    pass = document.getElementById("Password").value;
+    $('#barraProgreso').css("width", "50%");
+    var para = {
+        UserName: username,
+        password: pass
+    }; 
+    
+    var sURL = "http://localhost:85/Usuarios/Login";
+    $.ajax({
+        url: sURL,
+        dataType: "json",
+        type: "POST",
+
+        async: true,
+        crossDomain: true,
+
+        xhrFields: {
+            cors: false
+        },
+        cache: false,
+        data: para,
+
+
+        //dataFilter: function (data) { return data; },
+        success: function(data) {
+            $('#barraProgreso').css("width", "100%");
+            if (data.Status == "ERROR" ) {
+                $('#msgs').html('<div class="alert alert-danger alert-dismissible text-center"> <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button><h5 style="text-align: center;"><i class="icon fas fa-ban"></i> Alert!</h5> <strong style="text-align: center;">' + data.Message + '</strong></div>');
+            }else{
+                $('#msgs').html('<div class="alert alert-success alert-dismissible text-center"> <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button><h5 style="text-align: center;"><i class="icon fas fa-check"></i> Alert!</h5> <strong style="text-align: center;">' + data.Message + '</strong></div>');
+                setTimeout(function () {
+                    SetLogin(data.lstUsuarios[0]);
+                }, 1000);
+
+                
+           }
+
+
+        },
+        error: function(XMLHttpRequest, textStatus, errorThrown) {
+            $('#barraProgreso').css("width", "100%");
+            $('#msgs').html('<div class="alert alert-danger alert-dismissible text-center"> <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button><h5 style="text-align: center;"><i class="icon fas fa-ban"></i> Alert!</h5> <strong style="text-align: center;">Error, Please call the support</strong></div>');
+        }
+    });
+
+}
+
+     function SetLogin(User) {
+        var sURL = "/LoginPortal/setLogin";
+        $.ajax({
+            url: sURL,
+            dataType: "json",
+            type: "POST",
+            data: User,
+
+            async: false,
+            crossDomain: true,
+
+            xhrFields: {
+                cors: false
+            },
+            cache: false,
+
+
+            //dataFilter: function (data) { return data; },
+            success: function (data) {
+
+               
+                location.href = "/Portal";
+
+
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+
+                $('#msgs').html('<div class="alert alert-danger alert-dismissible text-center" style=""> <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button><h5 style="text-align: center;"><i class="icon fas fa-ban"></i> Alert!</h5> <strong style="text-align: center;">Error No Conection</strong></div>');
+            }
+        });
+    }
+    
+
+
+
+
+
+
+function Cancelar() {
+    location.href = "{{url('/')}}";
+}
+$('#Password').keyup(function(e) {
+    if (e.keyCode == 13) {
+        IniciarSesion();
+    }
+});
+</script>
+</html>

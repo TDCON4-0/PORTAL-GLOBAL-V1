@@ -1,0 +1,1277 @@
+﻿@*@model Portal_Global.Models.ViewModels.ListTablaUsuarios*@
+
+@{
+    Layout = null;
+}
+
+
+
+<style>
+    .letraGrande {
+        font-size: 20px;
+    }
+
+    #borderResumen {
+        border: 5px ridge #1C6EA4;
+        border-radius: 5px;
+    }
+
+    .centrado {
+        text-align: center;
+        align-content: center;
+    }
+
+    .step_descr {
+        font-size: 26px;
+    }
+
+    .form-group {
+        margin-bottom: 26px;
+    }
+
+    .form-control:disabled,
+    .form-control[readonly] {
+        background-color: #ffffff;
+        opacity: 1;
+    }
+
+    .has-success .form-control,
+    .has-success .select2-container--default .select2-selection--single .select2-selection__rendered,
+    .select2-container--default .select2-selection--single .has-success .select2-selection__rendered,
+    .has-success .select2-container--default .select2-selection--single,
+    .select2-container--default .has-success .select2-selection--single,
+    .has-success .select2-selection.select2-selection--multiple,
+    .has-success .wizard .content > .body input,
+    .wizard .content > .body .has-success input,
+    .has-success .mce-floatpanel .mce-textbox,
+    .mce-floatpanel .has-success .mce-textbox,
+    .has-success .mce-floatpanel .mce-btn,
+    .mce-floatpanel .has-success .mce-btn,
+    .has-success .dataTables_wrapper .dataTables_filter input,
+    .dataTables_wrapper .dataTables_filter .has-success input,
+    .has-success .dataTables_wrapper .dataTables_length select,
+    .dataTables_wrapper .dataTables_length .has-success select,
+    .has-success .jsgrid-cell input,
+    .jsgrid-cell .has-success input,
+    .has-success .jsgrid-cell select,
+    .jsgrid-cell .has-success select,
+    .has-success .tablesaw-bar .btn-select select,
+    .tablesaw-bar .btn-select .has-success select,
+    .has-success .dd-handle,
+    .has-success .dd3-content,
+    .has-success .app-search .form-control:focus,
+    .app-search .has-success .form-control:focus,
+    .has-success .app-search .jsgrid-cell input:focus,
+    .app-search .jsgrid-cell .has-success input:focus,
+    .has-success .jsgrid-cell .app-search input:focus,
+    .jsgrid-cell .app-search .has-success input:focus,
+    .has-success .app-search .jsgrid-cell select:focus,
+    .app-search .jsgrid-cell .has-success select:focus,
+    .has-success .jsgrid-cell .app-search select:focus,
+    .jsgrid-cell .app-search .has-success select:focus,
+    .has-success .app-search .dd-handle:focus,
+    .app-search .has-success .dd-handle:focus,
+    .has-success .app-search .dd3-content:focus,
+    .app-search .has-success .dd3-content:focus {
+        border-color: rgba(113, 170, 104, 0.5);
+    }
+
+        .has-success .form-control:focus,
+        .has-success .select2-container--default .select2-selection--single .select2-selection__rendered:focus,
+        .select2-container--default .select2-selection--single .has-success .select2-selection__rendered:focus,
+        .has-success .select2-container--default .select2-selection--single:focus,
+        .select2-container--default .has-success .select2-selection--single:focus,
+        .has-success .select2-selection.select2-selection--multiple:focus,
+        .has-success .wizard .content > .body input:focus,
+        .wizard .content > .body .has-success input:focus,
+        .has-success .mce-floatpanel .mce-textbox:focus,
+        .mce-floatpanel .has-success .mce-textbox:focus,
+        .has-success .mce-floatpanel .mce-btn:focus,
+        .mce-floatpanel .has-success .mce-btn:focus,
+        .has-success .dataTables_wrapper .dataTables_filter input:focus,
+        .dataTables_wrapper .dataTables_filter .has-success input:focus,
+        .has-success .dataTables_wrapper .dataTables_length select:focus,
+        .dataTables_wrapper .dataTables_length .has-success select:focus,
+        .has-success .jsgrid-cell input:focus,
+        .jsgrid-cell .has-success input:focus,
+        .has-success .jsgrid-cell select:focus,
+        .jsgrid-cell .has-success select:focus,
+        .has-success .tablesaw-bar .btn-select select:focus,
+        .tablesaw-bar .btn-select .has-success select:focus,
+        .has-success .dd-handle:focus,
+        .has-success .dd3-content:focus {
+            border-color: #71aa68;
+        }
+
+    .has-warning .form-control,
+    .has-warning .select2-container--default .select2-selection--single .select2-selection__rendered,
+    .select2-container--default .select2-selection--single .has-warning .select2-selection__rendered,
+    .has-warning .select2-container--default .select2-selection--single,
+    .select2-container--default .has-warning .select2-selection--single,
+    .has-warning .select2-selection.select2-selection--multiple,
+    .has-warning .wizard .content > .body input,
+    .wizard .content > .body .has-warning input,
+    .has-warning .mce-floatpanel .mce-textbox,
+    .mce-floatpanel .has-warning .mce-textbox,
+    .has-warning .mce-floatpanel .mce-btn,
+    .mce-floatpanel .has-warning .mce-btn,
+    .has-warning .dataTables_wrapper .dataTables_filter input,
+    .dataTables_wrapper .dataTables_filter .has-warning input,
+    .has-warning .dataTables_wrapper .dataTables_length select,
+    .dataTables_wrapper .dataTables_length .has-warning select,
+    .has-warning .jsgrid-cell input,
+    .jsgrid-cell .has-warning input,
+    .has-warning .jsgrid-cell select,
+    .jsgrid-cell .has-warning select,
+    .has-warning .tablesaw-bar .btn-select select,
+    .tablesaw-bar .btn-select .has-warning select,
+    .has-warning .dd-handle,
+    .has-warning .dd3-content,
+    .has-warning .app-search .form-control:focus,
+    .app-search .has-warning .form-control:focus,
+    .has-warning .app-search .jsgrid-cell input:focus,
+    .app-search .jsgrid-cell .has-warning input:focus,
+    .has-warning .jsgrid-cell .app-search input:focus,
+    .jsgrid-cell .app-search .has-warning input:focus,
+    .has-warning .app-search .jsgrid-cell select:focus,
+    .app-search .jsgrid-cell .has-warning select:focus,
+    .has-warning .jsgrid-cell .app-search select:focus,
+    .jsgrid-cell .app-search .has-warning select:focus,
+    .has-warning .app-search .dd-handle:focus,
+    .app-search .has-warning .dd-handle:focus,
+    .has-warning .app-search .dd3-content:focus,
+    .app-search .has-warning .dd3-content:focus {
+        border-color: rgba(230, 176, 52, 0.5);
+    }
+
+        .has-warning .form-control:focus,
+        .has-warning .select2-container--default .select2-selection--single .select2-selection__rendered:focus,
+        .select2-container--default .select2-selection--single .has-warning .select2-selection__rendered:focus,
+        .has-warning .select2-container--default .select2-selection--single:focus,
+        .select2-container--default .has-warning .select2-selection--single:focus,
+        .has-warning .select2-selection.select2-selection--multiple:focus,
+        .has-warning .wizard .content > .body input:focus,
+        .wizard .content > .body .has-warning input:focus,
+        .has-warning .mce-floatpanel .mce-textbox:focus,
+        .mce-floatpanel .has-warning .mce-textbox:focus,
+        .has-warning .mce-floatpanel .mce-btn:focus,
+        .mce-floatpanel .has-warning .mce-btn:focus,
+        .has-warning .dataTables_wrapper .dataTables_filter input:focus,
+        .dataTables_wrapper .dataTables_filter .has-warning input:focus,
+        .has-warning .dataTables_wrapper .dataTables_length select:focus,
+        .dataTables_wrapper .dataTables_length .has-warning select:focus,
+        .has-warning .jsgrid-cell input:focus,
+        .jsgrid-cell .has-warning input:focus,
+        .has-warning .jsgrid-cell select:focus,
+        .jsgrid-cell .has-warning select:focus,
+        .has-warning .tablesaw-bar .btn-select select:focus,
+        .tablesaw-bar .btn-select .has-warning select:focus,
+        .has-warning .dd-handle:focus,
+        .has-warning .dd3-content:focus {
+            border-color: #e6b034;
+        }
+
+    .has-error .form-control,
+    .has-error .select2-container--default .select2-selection--single .select2-selection__rendered,
+    .select2-container--default .select2-selection--single .has-error .select2-selection__rendered,
+    .has-error .select2-container--default .select2-selection--single,
+    .select2-container--default .has-error .select2-selection--single,
+    .has-error .select2-selection.select2-selection--multiple,
+    .has-error .wizard .content > .body input,
+    .wizard .content > .body .has-error input,
+    .has-error .mce-floatpanel .mce-textbox,
+    .mce-floatpanel .has-error .mce-textbox,
+    .has-error .mce-floatpanel .mce-btn,
+    .mce-floatpanel .has-error .mce-btn,
+    .has-error .dataTables_wrapper .dataTables_filter input,
+    .dataTables_wrapper .dataTables_filter .has-error input,
+    .has-error .dataTables_wrapper .dataTables_length select,
+    .dataTables_wrapper .dataTables_length .has-error select,
+    .has-error .jsgrid-cell input,
+    .jsgrid-cell .has-error input,
+    .has-error .jsgrid-cell select,
+    .jsgrid-cell .has-error select,
+    .has-error .tablesaw-bar .btn-select select,
+    .tablesaw-bar .btn-select .has-error select,
+    .has-error .dd-handle,
+    .has-error .dd3-content,
+    .has-error .app-search .form-control:focus,
+    .app-search .has-error .form-control:focus,
+    .has-error .app-search .jsgrid-cell input:focus,
+    .app-search .jsgrid-cell .has-error input:focus,
+    .has-error .jsgrid-cell .app-search input:focus,
+    .jsgrid-cell .app-search .has-error input:focus,
+    .has-error .app-search .jsgrid-cell select:focus,
+    .app-search .jsgrid-cell .has-error select:focus,
+    .has-error .jsgrid-cell .app-search select:focus,
+    .jsgrid-cell .app-search .has-error select:focus,
+    .has-error .app-search .dd-handle:focus,
+    .app-search .has-error .dd-handle:focus,
+    .has-error .app-search .dd3-content:focus,
+    .app-search .has-error .dd3-content:focus {
+        border-color: rgba(218, 71, 58, 0.5);
+    }
+
+        .has-error .form-control:focus,
+        .has-error .select2-container--default .select2-selection--single .select2-selection__rendered:focus,
+        .select2-container--default .select2-selection--single .has-error .select2-selection__rendered:focus,
+        .has-error .select2-container--default .select2-selection--single:focus,
+        .select2-container--default .has-error .select2-selection--single:focus,
+        .has-error .select2-selection.select2-selection--multiple:focus,
+        .has-error .wizard .content > .body input:focus,
+        .wizard .content > .body .has-error input:focus,
+        .has-error .mce-floatpanel .mce-textbox:focus,
+        .mce-floatpanel .has-error .mce-textbox:focus,
+        .has-error .mce-floatpanel .mce-btn:focus,
+        .mce-floatpanel .has-error .mce-btn:focus,
+        .has-error .dataTables_wrapper .dataTables_filter input:focus,
+        .dataTables_wrapper .dataTables_filter .has-error input:focus,
+        .has-error .dataTables_wrapper .dataTables_length select:focus,
+        .dataTables_wrapper .dataTables_length .has-error select:focus,
+        .has-error .jsgrid-cell input:focus,
+        .jsgrid-cell .has-error input:focus,
+        .has-error .jsgrid-cell select:focus,
+        .jsgrid-cell .has-error select:focus,
+        .has-error .tablesaw-bar .btn-select select:focus,
+        .tablesaw-bar .btn-select .has-error select:focus,
+        .has-error .dd-handle:focus,
+        .has-error .dd3-content:focus {
+            border-color: #da473a;
+        }
+
+    .has-success .checkbox,
+    .has-success .checkbox-inline,
+    .has-success .control-label,
+    .has-success .help-block,
+    .has-success .radio,
+    .has-success .radio-inline,
+    .has-success.checkbox label,
+    .has-success.checkbox-inline label,
+    .has-success.radio label,
+    .has-success.radio-inline label {
+        color: #71aa68;
+    }
+
+    .has-warning .checkbox,
+    .has-warning .checkbox-inline,
+    .has-warning .control-label,
+    .has-warning .help-block,
+    .has-warning .radio,
+    .has-warning .radio-inline,
+    .has-warning.checkbox label,
+    .has-warning.checkbox-inline label,
+    .has-warning.radio label,
+    .has-warning.radio-inline label {
+        color: #e6b034;
+    }
+
+    .has-error .checkbox,
+    .has-error .checkbox-inline,
+    .has-error .control-label,
+    .has-error .help-block,
+    .has-error .radio,
+    .has-error .radio-inline,
+    .has-error.checkbox label,
+    .has-error.checkbox-inline label,
+    .has-error.radio label,
+    .has-error.radio-inline label {
+        color: #da473a;
+    }
+
+    .has-error .input-group-addon {
+        background-color: transparent;
+        color: #da473a;
+        border-color: rgba(218, 71, 58, 0.5);
+    }
+
+    .has-success .input-group-addon {
+        background-color: transparent;
+        color: #71aa68;
+        border-color: rgba(113, 170, 104, 0.5);
+    }
+
+    .has-success .form-control-feedback {
+        color: #71aa68;
+    }
+
+    .has-warning .form-control-feedback {
+        color: #e6b034;
+    }
+
+    .has-error .form-control-feedback {
+        color: #da473a;
+    }
+
+
+    .x_content input {
+        display: block;
+    }
+
+    [type=button]:not(:disabled),
+    [type=reset]:not(:disabled),
+    [type=submit]:not(:disabled),
+    button:not(:disabled) {
+        cursor: pointer;
+    }
+
+    .btn-primary {
+        color: #fff !important;
+        background-color: #92A2BD !important;
+        border-color: #92A2BD !important;
+    }
+
+    .btn {
+        border-radius: 1 !important;
+    }
+
+    .btn-group-lg > .btn,
+    .btn-lg {
+        padding: .5rem 1rem;
+        font-size: 1.25rem;
+        line-height: 1.5;
+        border-radius: .3rem;
+    }
+
+    .asterisco {
+        color: red;
+    }
+
+    #newrol {
+        border-radius: 0px 25px 25px 0px;
+        border: 1px solid rgba(221, 226, 232, 0.49);
+        border-left: 0;
+        -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+        box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+        margin-bottom: 0 !important;
+    }
+
+    .autocomplete {
+        /*the container must be positioned relative:*/
+        position: relative;
+    }
+
+    .autocomplete-items {
+        position: absolute;
+        border: 1px solid #d4d4d4;
+        border-bottom: none;
+        border-top: none;
+        z-index: 99;
+        /*position the autocomplete items to be the same width as the container:*/
+        top: 100%;
+        left: 2%;
+        right: 2%;
+    }
+
+        .autocomplete-items div {
+            padding: 10px;
+            cursor: pointer;
+            background-color: #fff;
+            border-bottom: 1px solid #d4d4d4;
+        }
+
+            .autocomplete-items div:hover {
+                /*when hovering an item:*/
+                background-color: #e9e9e9;
+            }
+
+    .autocomplete-active {
+        /*when navigating through the items using the arrow keys:*/
+        background-color: DodgerBlue !important;
+        color: #ffffff;
+    }
+</style>
+
+<style>
+    .dropbtn {
+        background-color: #1abb9c;
+        border: none;
+        color: white;
+        padding: 4px 8px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        margin: 4px 2px;
+        cursor: pointer;
+        border-radius: 10px;
+        font-weight: 900;
+        font-size: 125%;
+    }
+
+    .dropdown {
+        position: relative;
+        display: inline-block;
+    }
+
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: #f1f1f1;
+        min-width: 160px;
+        box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+        z-index: 1;
+    }
+
+        .dropdown-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+
+            .dropdown-content a:hover {
+                background-color: #ddd;
+            }
+
+    .dropdown:hover .dropdown-content {
+        display: block;
+    }
+
+    .dropdown:hover .dropbtn {
+    }
+
+    select option[disabled] {
+        color: #000;
+        font-weight: bold;
+    }
+</style>
+
+
+<!--Nuevo usuario-->
+<div class="x_panel" id="divNuevoUsuario">
+    <div class="x_title">
+        <h2>New Profile <small>Please complete all fields</small> </h2>
+        <div class="clearfix"></div>
+    </div>
+    <div class="x_content">
+
+
+
+        <div class="">
+            <br>
+            <div id="demo-form2" data-parsley-validate="" class="form-horizontal form-label-left" novalidate="">
+
+                <div class="item form-group" id="div1">
+                    <label class="col-form-label col-md-3 col-sm-3 label-align" for="first-name">
+                        Profile Name <span class="required">*</span>
+                    </label>
+                    <div class="col-md-6 col-sm-6 ">
+                        <input type="text" id="ProfileName" required="required" class="form-control ">
+                    </div>
+                </div>
+                <h2>Modules Information </h2>
+                <hr />
+                <br>
+                <div class="item form-group">
+                    <label class="col-form-label col-md-3 col-sm-3 label-align">
+                        Modules <span class="required">*</span>
+                    </label>
+                    <div class="col-md-6 col-sm-6 ">
+                        <select id="ComboPerfiles" class="form-control validarCombo" data-toggle="tooltip" data-placement="right"
+                                title="" data-original-title="Select the type of schedule">
+                            <option value="Select Option" disabled selected="selected">Select Option</option>
+                        </select>
+                    </div>
+
+                    <br>
+
+                </div>
+
+                <div class="item form-group">
+                    <label class="col-form-label col-md-3 col-sm-3 label-align">
+                        Access Nivel <span class="required">*</span>
+                    </label>
+                    <div class="col-md-6 col-sm-6 ">
+                        <select id="ComboRoles" class="form-control validarCombo" data-toggle="tooltip" data-placement="right"
+                                title="" data-original-title="Select the type of schedule " onchange="addPerfiles()">
+                            <option value="Select Option" disabled selected="selected">Select Option</option>
+                        </select>
+                        <br /><br />
+                        <div id="divPerfilesButton" class="form-group">
+                            <div id="PerfilesButton" style=' margin: 1rem;  padding: 1rem;  border: 2px solid #ccc; background-color: #fafafa;'>
+                            </div>
+                        </div>
+                        <input type="text" class="" id="idModulos">
+                    </div>
+
+                    <br>
+                </div>
+
+                <div class="item form-group">
+                    <label class="col-form-label col-md-3 col-sm-3 label-align">
+                        Buildings <span class="required">*</span>
+                    </label>
+                    <div class="col-md-6 col-sm-6 ">
+                        <select id="ComboEdificios" class="form-control validarCombo" data-toggle="tooltip" data-placement="right"
+                                title="" data-original-title="Select the type of schedule " onchange="AddEdificios()">
+                            <option value="Select Option" disabled selected="selected">Select Option</option>
+                        </select>
+                        <br /><br />
+                        <div id="divPerfilesButton" class="form-group">
+                            <div id="EdificiosButton" style=' margin: 1rem;  padding: 1rem;  border: 2px solid #ccc; background-color: #fafafa;'>
+                            </div>
+                        </div>
+                        <input type="text" class="" id="idEdificios">
+                    </div>
+
+                    <br>
+                </div>
+
+                <div class="item form-group">
+                    <label class="col-form-label col-md-3 col-sm-3 label-align">
+                        Systems <span class="required">*</span>
+                    </label>
+                    <div class="col-md-6 col-sm-6 ">
+                        <select id="ComboSistemas" class="form-control validarCombo" data-toggle="tooltip" data-placement="right"
+                                title="" data-original-title="Select the type of schedule " onchange="AddSistemas()">
+                            <option value="Select Option" disabled selected="selected">Select Option</option>
+                        </select>
+                        <br /><br />
+                        <div id="divPerfilesButton" class="form-group">
+                            <div id="SistemassButton" style=' margin: 1rem;  padding: 1rem;  border: 2px solid #ccc; background-color: #fafafa;'>
+                            </div>
+                        </div>
+                        <input type="text" class="" id="idSistemas">
+                    </div>
+
+                    <br>
+                </div>
+            </div>
+        </div>
+       
+
+        <div class="col-md-12" id="divMensajeError" style="display:none">
+            <div class="alert alert-danger alert-dismissable">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                <h6 class="pull-left" id="mensajeError">Error:.</h6>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+
+
+    </div>
+    <div class="form-group row form-group row pull-left">
+        <div class="col-md-12">
+            <button type="button" class="btn btn-primary" onclick="HomeUsuarios();">Cancel</button>
+            <input type="button" value="Save" class="btn btn-success" id="SaveUserF" onclick="validaciones();">
+        </div>
+    </div>
+</div>
+<div id="error" class="alert alert-danger" role="alert" style="display:none;">
+</div>
+
+
+
+<div class="col-md-12" id="divMensajeError" style="display:none">
+    <div class="alert alert-danger alert-dismissable">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+
+        <h6 class="pull-left" id="mensajeError">Error:.</h6>
+        <div class="clearfix"></div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+    var click = 0;
+    var ArrCompany = [];
+    var ArrCompany1 = [];
+    var ArrDep = [];
+    var ArrDep1 = [];
+    var ArrManager = [];
+    var ArrManager1 = [];
+    $("#SaveUser").hide();
+
+
+    main();
+    function main() {
+
+        $('#error').hide();
+        FillRol();
+        FillModulos();
+        FillEdificios();
+        FillSistemas();
+
+    };
+
+    var objDepartamentos = "";
+    var objIDDepa = "";
+    var objDepartamneto = [];
+    var objID = [];
+    var bandera = 0;
+    function addPerfiles() {
+        if ($('#ComboPerfiles').val() != 'Select Option') {
+
+            $("#ComboPerfiles").addClass("has-ok has-success");
+            $("#ComboPerfiles").removeClass("has-error has-danger");
+
+
+            var arreDest = objDepartamentos.split(",");
+            if (arreDest.length > 0) {
+                for (let x = 0; x < arreDest.length; x++) {
+                    if (arreDest[x] == $('#ComboPerfiles option:selected').text() && arreDest[x] != "") {
+                        bandera = 1;
+
+
+                        break;
+                    } else {
+                        bandera = 0;
+                    }
+
+                }
+            }
+
+
+
+            if (bandera == 0) {
+                objDepartamentos = objDepartamentos + $('#ComboPerfiles option:selected').text() + ',';
+                objIDDepa = objIDDepa + $('#ComboPerfiles ').val() + ',';
+                objDepartamneto = objDepartamentos;
+                objID = objIDDepa;
+                $('#ComboPerfiles option:selected').attr('disabled', true);
+                $('#idModulos').val(objIDDepa);
+                $('#PerfilesButton').empty();
+                arreDest = objDepartamentos.split(",");
+                arreDest.forEach(function (valor, indice, array) {
+                    if (valor != "") {
+
+                        if (bandera == 0) {
+                            $('#PerfilesButton').append(
+                                '<div class="dropdown"> <button class="dropbtn">' + valor +
+                                '</button> <div class="dropdown-content"> <a href="javascript:eliminarDep(' +
+                                "'" + valor + "'" +
+                                ');"><i class="fa fa-remove"></i>&nbsp;&nbsp;Delete</a> </div></div>'
+                            );
+                        }
+
+                    }
+
+                });
+            }
+
+
+
+
+
+        } else {
+            $("#ComboPerfiles").removeClass("has-ok has-success");
+            $("#ComboPerfiles").addClass("has-error has-danger");
+            swal("Error", "Please add correct information", "error");
+            $('#PerfilesButton').empty();
+        }
+
+
+    }
+
+    function eliminarDep(depa) {
+
+
+        var id;
+        var objSepararDepartamneto = objDepartamneto.split(",");
+        var objSepararID = objIDDepa.split(",");
+        var idDepartamento = "";
+        for (let i = 0; i < objSepararDepartamneto.length - 1; i++) {
+            if (objSepararDepartamneto[i] == depa) {
+                idDepartamento = objSepararID[i];
+                id = idDepartamento;
+                if (idDepartamento == objSepararID[i]) {
+                    objSepararID.splice(i, 1);
+                    $('#ComboPerfiles option[value="' + id + '"]').attr('disabled', false);
+                    objSepararDepartamneto.splice(i, 1);
+                    objDepartamneto = objDepartamneto.replace(depa + ',', '');
+                    objIDDepa = objIDDepa.replace(id + ',', '');
+                    objDepartamentos = objDepartamneto;
+
+                }
+                break;
+            }
+        }
+        $('#idModulos').val(objSepararID);
+        $('#PerfilesButton').empty();
+
+        objSepararDepartamneto.forEach(function (valor, indice, array) {
+            if (valor != "") {
+                $('#PerfilesButton').append(
+                    '<div class="dropdown"> <button class="dropbtn">' + valor +
+                    '</button> <div class="dropdown-content"> <a href="javascript:eliminarDep(' +
+                    "'" + valor + "'" +
+                    ');"><i class="fa fa-remove"></i>&nbsp;&nbsp;Delete</a> </div></div>'
+                );
+            }
+
+        });
+
+
+    }
+
+    // EDIFICIOSSSS
+    var objEdicifios  = "";
+    var objIDEdicifios = "";
+    var objEdicifios  = [];
+    var objID2 = [];
+    var bandera = 0;
+    function addPerfiles() {
+        if ($('#ComboEdicifios ').val() != 'Select Option') {
+
+            $("#ComboEdicifios s").addClass("has-ok has-success");
+            $("#ComboEdicifios ").removeClass("has-error has-danger");
+
+
+            var arreDest = objEdicifios .split(",");
+            if (arreDest.length > 0) {
+                for (let x = 0; x < arreDest.length; x++) {
+                    if (arreDest[x] == $('#ComboPerfiles option:selected').text() && arreDest[x] != "") {
+                        bandera = 1;
+
+
+                        break;
+                    } else {
+                        bandera = 0;
+                    }
+
+                }
+            }
+
+
+
+            if (bandera == 0) {
+                objEdicifios = objEdicifios + $('#ComboEdicifios  option:selected').text() + ',';
+                objIDEdicifios = objIDEdicifios + $('#ComboEdicifios  ').val() + ',';
+                objEdicifios  = objEdicifios ;
+                objID2 = objIDEdicifios ;
+                $('#ComboEdicifios  option:selected').attr('disabled', true);
+                $('#idEdicifios ').val(objIDEdicifios );
+                $('#Edicifios Button').empty();
+                arreDest = objEdicifios .split(",");
+                arreDest.forEach(function (valor, indice, array) {
+                    if (valor != "") {
+
+                        if (bandera == 0) {
+                            $('#Edicifios Button').append(
+                                '<div class="dropdown"> <button class="dropbtn">' + valor +
+                                '</button> <div class="dropdown-content"> <a href="javascript:eliminarEdicifios (' +
+                                "'" + valor + "'" +
+                                ');"><i class="fa fa-remove"></i>&nbsp;&nbsp;Delete</a> </div></div>'
+                            );
+                        }
+
+                    }
+
+                });
+            }
+
+
+
+
+
+        } else {
+            $("#Edicifios Perfiles").removeClass("has-ok has-success");
+            $("#Edicifios Perfiles").addClass("has-error has-danger");
+            swal("Error", "Please add correct information", "error");
+            $('#Edicifios Button').empty();
+        }
+
+
+    }
+
+    function eliminarEdicifios (depa) {
+
+
+        var id;
+        var objSepararEdicifios = objEdicifios .split(",");
+        var objSepararID = objIDEdicifios .split(",");
+        var idEdicifios  = "";
+        for (let i = 0; i < objSepararEdicifios .length - 1; i++) {
+            if (objSepararEdicifios [i] == depa) {
+                idEdicifios  = objSepararID[i];
+                id = idEdicifios ;
+                if (idEdicifios  == objSepararID[i]) {
+                    objSepararID.splice(i, 1);
+                    $('#ComboEdicifios  option[value="' + id + '"]').attr('disabled', false);
+                    objSepararEdicifios .splice(i, 1);
+                    objEdicifios = objEdicifios .replace(depa + ',', '');
+                    objIDEdicifios = objIDEdicifios .replace(id + ',', '');
+                    objEdicifios = objEdicifios ;
+
+                }
+                break;
+            }
+        }
+        $('#idEdicifios ').val(objSepararID);
+        $('#Edicifios sButton').empty();
+
+        objSepararEdicifios .forEach(function (valor, indice, array) {
+            if (valor != "") {
+                $('#PerfilesButton').append(
+                    '<div class="dropdown"> <button class="dropbtn">' + valor +
+                    '</button> <div class="dropdown-content"> <a href="javascript:eliminarEdicifios (' +
+                    "'" + valor + "'" +
+                    ');"><i class="fa fa-remove"></i>&nbsp;&nbsp;Delete</a> </div></div>'
+                );
+            }
+
+        });
+
+
+    }
+
+    $("#Phone").keypress(function (e) {
+        var x = e.target.value.replace(/\D/g, '').match(/(\d{0,3})(\d{0,3})(\d{0,4})/);
+        e.target.value = !x[2] ? x[1] : '(' + x[1] + ') ' + x[2] + (x[3] ? '-' + x[3] : '');
+    });
+
+    var Modulos;
+
+    function FillModulos() {
+
+
+        var sURL = IPWS + "Usuarios/getAllModules";
+        $.ajax({
+            url: sURL,
+            dataType: "json",
+            type: "GET",
+            async: false,
+            success: function (data) {
+                if (data[0].ModuloName != null) {
+                    Modulos = data;
+                    for (var i = 0; i < Modulos.length; i++) {
+                        $("#ComboPerfiles").append('<option value="' + Modulos[i].ID +
+                            '" data-id=" ' + Modulos[i].ID + '" data-pos="' + i + '" >' + Modulos[i].ModuloName + ' </option>');
+                    }
+                }
+
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+
+            }
+        });
+
+
+
+
+    }
+    var Roles;
+
+    function FillRol() {
+
+        var sURL = IPWS + "Usuarios/GetAllRoles";
+        $.ajax({
+            url: sURL,
+            dataType: "json",
+            type: "GET",
+            async: false,
+            success: function (data) {
+                if (data[0].RolName != null) {
+                    roles = data;
+                    for (var i = 0; i < roles.length; i++) {
+                        $("#ComboRoles").append('<option value="' + roles[i].ID +
+                            '" data-id=" ' + roles[i].ID + '" >' + roles[i].RolName + '</option>');
+                    }
+                }
+
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                //
+                //VaciarDatos();
+                //swal("Error", "No hay conexion con el servidor", "error");
+            }
+        });
+
+    }
+
+
+    var Edificios;
+
+    function FillEdificios() {
+
+        var sURL = IPWS + "Usuarios/getAllEdificios";
+        $.ajax({
+            url: sURL,
+            dataType: "json",
+            type: "GET",
+            async: false,
+            success: function (data) {
+                if (data[0].EdificioName != null) {
+                    Edificios = data;
+                    for (var i = 0; i < Edificios.length; i++) {
+                        $("#ComboEdificios").append('<option value="' + Edificios[i].ID +
+                            '" data-id=" ' + Edificios[i].ID + '" >' + Edificios[i].EdificioName + '</option>');
+                    }
+                }
+
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                //
+                //VaciarDatos();
+                //swal("Error", "No hay conexion con el servidor", "error");
+            }
+        });
+
+    }
+
+    var sistemas;
+
+    function FillSistemas() {
+
+        var sURL = IPWS + "Usuarios/getAllSystems";
+        $.ajax({
+            url: sURL,
+            dataType: "json",
+            type: "GET",
+            async: false,
+            success: function (data) {
+                if (data[0].SistemaName != null) {
+                    sistemas = data;
+                    for (var i = 0; i < sistemas.length; i++) {
+                        $("#ComboSistemas").append('<option value="' + sistemas[i].ID +
+                            '" data-id=" ' + sistemas[i].ID + '" >' + sistemas[i].SistemaName + '</option>');
+                    }
+                }
+
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                //
+                //VaciarDatos();
+                //swal("Error", "No hay conexion con el servidor", "error");
+            }
+        });
+
+    }
+
+    function validaciones() {
+        var textIdioma1 = "";
+        var Idioma = "English";
+        var alertManagerInvalid = '<i class="fa fa-warning  pr-15 pull-left"></i> Error: The manager is invalid.';
+        var alertCompanyInvalid = '<i class="fa fa-warning  pr-15 pull-left"></i> Error: The company is invalid.';
+        if (Idioma == "Espanol") {
+            textIdioma1 = "Error: favor de llenar correctamente todos los campos";
+        }
+        if (Idioma == "English") {
+            textIdioma1 =
+                '<i class="fa fa-warning  pr-15 pull-left"></i> Error: please fill in all fields correctly.';
+        }
+
+        $('#divMensajeError').hide();
+        var band = []
+        var inputs = $(".validar");
+        for (let i = 0; i < inputs.length; i++) {
+            if (inputs[i].value == "") {
+                $("#" + inputs[i].parentNode.id).removeClass("has-ok has-success");
+                $("#" + inputs[i].parentNode.id).addClass("has-error has-danger");
+                band.push(1);
+            } else {
+
+                $("#" + inputs[i].parentNode.id).addClass("has-ok has-success");
+                $("#" + inputs[i].parentNode.id).removeClass("has-error has-danger");
+                //var Company = $("#Company").val();
+                //var manager = $("#manager").val();
+
+                //var resultCompany = validarAutocomplete(ArrCompany1, Company);
+                //var resultManager = validarAutocomplete(ArrManager1, manager);
+                //if (resultCompany == "true") {
+                //    $("#DivCompany").addClass("has-ok has-success");
+                //    $("#DivCompany").removeClass("has-error has-danger");
+                //    band.push(0);
+                //} else {
+                //    $("#DivCompany").removeClass("has-ok has-success");
+                //    $("#DivCompany").addClass("has-error has-danger");
+                //    band.push(2);
+                //}
+
+                //if (resultManager == "true") {
+                //    $("#DivManager").addClass("has-ok has-success");
+                //    $("#DivManager").removeClass("has-error has-danger");
+                //    band.push(0);
+                //} else {
+                //    $("#DivManager").removeClass("has-ok has-success");
+                //    $("#DivManager").addClass("has-error has-danger");
+                //    band.push(3);
+                //}
+
+            }
+
+        }
+
+
+        var languague = $("#Languague").val();
+        var Combos = $(".validarCombo");
+        console.log("combo");
+        for (let i = 0; i < Combos.length; i++) {
+            if (Combos[i].value == "Select Option") {
+                $("#" + Combos[i].parentNode.id).removeClass("has-ok has-success");
+                $("#" + Combos[i].parentNode.id).addClass("has-error has-danger");
+                band.push(1);
+            } else {
+
+                $("#" + Combos[i].parentNode.id).addClass("has-ok has-success");
+                $("#" + Combos[i].parentNode.id).removeClass("has-error has-danger");
+                band.push(0);
+            }
+
+        }
+        var band2 = 0;
+
+        var result = $.inArray(1, band);
+        var result2 = $.inArray(2, band);
+        var result3 = $.inArray(3, band);
+        if (result != -1) {
+            band2 = 1;
+
+        } else if (result2 != -1) {
+
+            band2 = 2;
+        } else if (result3 != -1) {
+
+            band2 = 3;
+        }
+
+
+        if (band2 == 0) {
+            //ok
+            var valcorreo = validarcorreo();
+            if (valcorreo == true) {
+                SaveUser2();
+            }
+
+        } else if (band2 == 1) {
+
+            $('#divMensajeError').show();
+            $('#mensajeError').html(textIdioma1);
+            return false;
+        } else if (band2 == 2) {
+            $('#divMensajeError').hide();
+            $('#divMensajeError').show();
+            $('#mensajeError').html(alertCompanyInvalid);
+            return false;
+        } else if (band2 == 3) {
+            $('#divMensajeError').hide();
+            $('#divMensajeError').show();
+            $('#mensajeError').html(alertManagerInvalid);
+            return false;
+        }
+
+    }
+
+    function validarAutocomplete(array, value) {
+        var result = $.inArray(value, array);
+        if (result != -1) {
+            return "true";
+        } else {
+            return "false";
+        }
+    }
+
+    function validateStep1() {
+        var textIdioma1 = "";
+        var Idioma = "English";
+        var alertInvalid = '<i class="fa fa-warning  pr-15 pull-left"></i> Error: The department is invalid.';
+        if (Idioma == "Espanol") {
+            textIdioma1 = "Error: favor de llenar correctamente todos los campos";
+        }
+        if (Idioma == "English") {
+            textIdioma1 = '<i class="fa fa-warning  pr-15 pull-left"></i> Error: please fill in all fields correctly.';
+        }
+        $('#divMensajeError').hide();
+        var band = []
+        var inputs = $(".validar");
+        for (let i = 0; i < inputs.length; i++) {
+
+            if (inputs[i].id == "Name" || inputs[i].id == "LastName" || inputs[i].id == "SecondLastName" || inputs[i].id == "UserName" || inputs[i].id == "Password" || inputs[i].id ==
+                "department") {
+                if (inputs[i].value == "") {
+                    $("#" + inputs[i].parentNode.id).removeClass("has-ok has-success");
+                    $("#" + inputs[i].parentNode.id).addClass("has-error has-danger");
+                    band.push(1);
+                } else {
+
+                    $("#" + inputs[i].parentNode.id).addClass("has-ok has-success");
+                    $("#" + inputs[i].parentNode.id).removeClass("has-error has-danger");
+                    var department = $("#department").val();
+                    var result = validarAutocomplete(ArrDep1, department);
+                    if (result == "true") {
+                        $("#" + inputs[i].parentNode.id).addClass("has-ok has-success");
+                        $("#" + inputs[i].parentNode.id).removeClass("has-error has-danger");
+                        band.push(0);
+                    } else {
+                        $("#Divdep").removeClass("has-ok has-success");
+                        $("#Divdep").addClass("has-error has-danger");
+                        band.push(2);
+                    }
+                }
+            }
+
+
+        }
+
+        var Combos = $(".validarCombo");
+        for (let i = 0; i < Combos.length; i++) {
+
+            if (Combos[i].id == "Rol") {
+                if (Combos[i].value == "Select Option") {
+                    $("#" + Combos[i].parentNode.id).removeClass("has-ok has-success");
+                    $("#" + Combos[i].parentNode.id).addClass("has-error has-danger");
+                    band.push(1);
+                } else {
+                    $("#" + Combos[i].parentNode.id).addClass("has-ok has-success");
+                    $("#" + Combos[i].parentNode.id).removeClass("has-error has-danger");
+                    band.push(0);
+                }
+            }
+        }
+
+
+        var band2 = 0;
+
+        var result = $.inArray(1, band);
+        var result2 = $.inArray(2, band);
+        if (result != -1) {
+            band2 = 1;
+
+        } else if (result2 != -1) {
+
+            band2 = 2;
+        }
+
+
+
+        if (band2 == 0) {
+
+            $('#divMensajeError').hide();
+            return true;
+
+        } else if (band2 == 1) {
+
+            $('#divMensajeError').show();
+            $('#mensajeError').html(textIdioma1);
+            return false;
+        } else if (band2 == 2) {
+            $('#divMensajeError').hide();
+            $('#divMensajeError').show();
+            $('#mensajeError').html(alertInvalid);
+            return false;
+        }
+    }
+
+
+    function HomeUsuarios() {
+        UpdateContenedor('Usuarios/AllUsuarios');;
+    }
+
+
+    function SaveUser2() {
+
+        var Name = $('#Name').val();
+        var LastName = $('#LastName').val();
+        var SecondLastName = $('#SecondLastName').val();
+        var Password = $('#Password').val();
+        var UserName = $('#UserName').val();
+        var Rol = $('#Rol option:selected').val();
+        var Idioma = $('#Languague option:selected').val();
+        var Telefono = $('#Phone').val();
+        var Correo = $('#Email').val();
+        var Compania = $('#Company').val();
+        var manager = $('#Manager').val();
+        var department = $('#Department').val();
+        var Tag1 = $('#Tag1').val();
+        var Tag2 = $('#Tag2').val();
+
+        var FisrtStep;
+        var SecondStep;
+
+
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "This user will be seved!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, saved it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                var para = {
+                    "Nombre": Name,
+                    "LastName": LastName,
+                    "SecondLastName": SecondLastName,
+                    "UserName": UserName,
+                    "Password": Password,
+                    "IdRol": parseInt($('#Rol option:selected').val()),
+                    "IdIdioma": parseInt($('#Languague option:selected').val()),
+                    "Telefono": Telefono,
+                    "Correo": Correo,
+                    "Status": "1",
+                    "Compania": Compania,
+                    "Manager": manager,
+                    "Departamento": department,
+                    "Tag1": Tag1,
+                    "Tag2": Tag2,
+
+
+                };
+
+                var sURL = IPWS + "/Usuarios/AddUsuario";
+
+                $.ajax({
+                    url: sURL,
+                    dataType: "json",
+                    type: "POST",
+
+
+                    async: false,
+
+                    data: para,
+
+
+                    success: function (data) {
+
+
+                        if (data.Status == "OK") {
+                            Swal.fire(
+                                '',
+                                'Your file has been deleted.',
+                                'success'
+                            )
+                            swal("OK! THE USER SAVED SUCCESSFULLY!", {
+                                icon: "success",
+                            });
+                            HomeUsuarios();
+                        } else {
+                            swal("Error", "ERROR SAVING DATA", "error");
+                        }
+
+                        //llenarCombos();
+
+
+
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        //
+                        //VaciarDatos();
+                        //swal("Error", "No hay conexion con el servidor", "error");
+                    }
+                });
+
+            }
+        })
+
+
+
+
+
+
+    }
+
+
+
+
+</script>
+<!-- Custom Theme Scripts -->

@@ -1,0 +1,230 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>All Departments</title>
+</head>
+<body>
+
+    <div class="text-right">
+        <button id="seeAll" style="" class="btn btn-warning" type="button">
+            <span id="icono"
+                  class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> SEE ALL
+        </button>
+        <!--You can add col-lg-12 if you want -->
+        <button type="button" class="btn btn-primary "
+                onclick="javascript:UpdateContenedor('Catalogos/AddDepartments');">
+            <span class="glyphicon glyphicon-plus" id="icon_enabled"
+                  style="color:white;"></span> NEW DEPARTMENT
+        </button>
+
+    </div>
+    <div class="col-md-12 col-sm-12 ">
+
+
+        <div class="x_panel">
+            <div class="x_title">
+                <h2> Departments Table</h2>
+
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="card-box table-responsive">
+
+                            <table id="example" class="table table-striped table-bordered dataTable no-footer dtr-inline">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Department Name</th>
+                                        <th>Status</th>
+                                        <th>Actions</th>
+
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+<script>
+    var tablaDepartments;
+
+    $(document).ready(function () {
+
+        tablaDepartments = $('#example').DataTable();
+        GetDepartments("0");
+
+    });
+
+    var datosDepartments;
+    function GetDepartments(All) {
+        datosDepartments = "";
+
+        var parametros = {
+            "All": All
+        };
+        var sURL = IPWS + "Usuarios/getAllDepartments";
+        $.ajax({
+            url: sURL,
+            dataType: "json",
+            type: "GET",
+            async: false,
+            data: parametros,
+            success: function (data) {
+                if (data[0].ID != null && data[0].ID != 0 ) {
+                    var fila;
+                    datosDepartments = data;
+                    tablaDepartments.clear();
+
+                    for (var i = 0; i < datosDepartments.length; i++) {
+                        var RouteEdit = "javascript:UpdateContenedor('Catalogos/EditDepartments?ID=" + datosDepartments[i].ID + "');";
+                        var TextoStatus;
+                        var colorBotonStatus;
+                        var colorLetraStatus;
+
+                        if (datosDepartments[i].Status == true || datosDepartments[i].Status == "true") {
+                            TextoStatus = "DISABLED";
+                            colorBotonStatus = 'btn btn-danger';
+                            colorLetraStatus = "<label class='badge badge-success' >ENABLED</label>";
+
+                        } else {
+                            TextoStatus = "ENABLED";
+                            colorBotonStatus = 'btn btn-success';
+                            colorLetraStatus = "<label class='badge bg-danger' >DISABLED</label>";
+                        }
+                        tablaDepartments.row.add([
+                            String(((datosDepartments[i].ID == "" || datosDepartments[i].ID == null) ? "" : datosDepartments[i].ID)),
+                            String(((datosDepartments[i].DepartamentName == "" || datosDepartments[i].DepartamentName == null) ? "" : datosDepartments[i].DepartamentName)),
+                            String(colorLetraStatus),
+                            String('<a href=' + RouteEdit + ' type="button" class="btn btn-primary waves-effect waves-light" id="botonModificar" ><span class="btn-label"><i class="fa fa-check"></i></span>Edit</a> <a type="button" class="' + colorBotonStatus + '" onclick="DeleteDepartments(' + datosDepartments[i].ID + ',' + datosDepartments[i].Status + ');"><span class="btn-label"><i class="fa fa-times"></i></span>' + TextoStatus +'</a>'),
+
+                        ]);
+
+                    }
+
+                    tablaDepartments.column('1:visible').order('desc').draw();
+                   /* $("#example").append(fila);*/
+                }
+
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+
+            }
+        });
+
+
+
+    }
+
+    function DeleteDepartments(ID, Status) {
+        var cambioStatus;
+        var ID = ID;
+        var TextoStatus;
+        if (Status == true) {
+            cambioStatus = "false";
+            TextoStatus = "DISABLED";
+        } else {
+            cambioStatus = "true";
+            TextoStatus = "ENABLED";
+        }
+        var para = {
+            "ID": ID,
+            "Status": cambioStatus,
+
+        };
+
+
+
+        Swal.fire({
+            title: "ARE YOU SURE",
+            text: "YOU WANT TO " + TextoStatus + " THIS DEPARTMENT?",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: "YES!, " + TextoStatus + ""
+        }).then((result) => {
+            if (result.isConfirmed) {
+                var sURL = IPWS + "/Usuarios/DeleteDepartments";
+                $.ajax({
+                    url: sURL,
+                    dataType: "json",
+                    type: "POST",
+                    async: false,
+                    data: para,
+                    success: function (data) {
+
+                        if (data.Status == "OK") {
+                            Swal.fire(
+                                'OK!',
+                                "THE DEPARTMENT " + TextoStatus + "  SUCCESSFULLY!",
+                                'success'
+                            )
+                            tablaDepartments.clear().draw();
+                            GetDepartments("0");
+                            ocultarelementos = 0;
+                        } else {
+                            Swal.fire("Error ", "ERROR " + TextoStatus + "  DEPARTMENT", "error");
+                        }
+
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+
+                    }
+                });
+
+
+
+            } else {
+                Swal.fire("WITHOUT CHANGES!");
+            }
+        });
+
+
+
+
+    }
+
+
+
+    var ocultarelementos = 0;
+    $('#seeAll').click(function () {
+
+        if (ocultarelementos == 0) {
+
+            $("#icono").removeClass("glyphicon glyphicon-eye-open");
+            $("#icono").addClass("glyphicon glyphicon-eye-close");
+            GetDepartments("1");
+            ocultarelementos = 1;
+
+        } else {
+
+
+            $("#icono").removeClass("glyphicon glyphicon-eye-close");
+            $("#icono").addClass("glyphicon glyphicon-eye-open");
+            GetDepartments("0");
+            ocultarelementos = 0;
+        }
+
+    });
+
+
+</script>
+
