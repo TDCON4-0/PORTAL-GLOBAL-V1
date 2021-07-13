@@ -178,7 +178,32 @@ namespace Portal_Global.Controllers
             return View();
         }
 
+        //Roles Roles Roles Rooles
+        public ActionResult AllRoles()
+        {
+            Usuario UserData = (Usuario)Session["UserData"];
+            ViewBag.User = UserData;
+            return View();
+        }
 
+
+        public ActionResult EditRoles(string ID)
+        {
+            try
+            {
+                ViewBag.ID = ID;
+                return View();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public ActionResult AddRoles()
+        {
+            return View();
+        }
 
 
     }

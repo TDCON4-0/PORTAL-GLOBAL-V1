@@ -98,17 +98,20 @@
     function FillPerfiles() {
         $("#Xtabla").empty();
 
-        var sURL = IPWS + "Usuarios/getAllPerfiles";
+        var sURL = IPWS + "getAllPerfiles";
         $.ajax({
             url: sURL,
             dataType: "json",
             type: "GET",
             async: false,
+            headers: {
+                Authorization: 'Bearer ' + Token
+            },
             success: function (data) {
                 if (data[0].PerfilName != null) {
                     Perfiles = data;
                     for (var i = 0; i < Perfiles.length; i++) {
-                        $("#Xtabla").append('<tr> <th scope="row">' + Perfiles[i].ID + '</th> <td><button type="button" class="btn btn-link" onclick="llenarTree(' + i + ')">' + Perfiles[i].PerfilName + '</button></td><td> <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Actions </button><div class="dropdown-menu"> <a class="dropdown-item" href="~/Usuarios/EditarPerfil/' + Perfiles[i].ID + '">Edit</a> <a class="dropdown-item" href="~/Usuarios/EliminarPerfil/' + Perfiles[i].ID + '"">Delete</a> </div></td></tr>');
+                        $("#Xtabla").append('<tr> <th scope="row">' + Perfiles[i].ID + '</th> <td><button type="button" class="btn btn-link" onclick="llenarTree(' + i + ')">' + Perfiles[i].PerfilName + '</button></td><td> <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Actions </button><div class="dropdown-menu"> <a class="dropdown-item" onclick="enviarEditarPerfil(' + Perfiles[i].ID + ')">Edit</a> <a class="dropdown-item" href="~/Usuarios/EliminarPerfil/' + Perfiles[i].ID + '"">Delete</a> </div></td></tr>');
                     }
                 }
 
@@ -118,9 +121,13 @@
             }
         });
 
-        $('#TableContent').DataTable();
+        $('#TableContent').DataTable().order([0, 'desc']).draw();
 
 
+    }
+    function enviarEditarPerfil( id) {
+        console.log(id)
+        UpdateContenedor('Usuarios/EditarPerfil?id='+id);
     }
     function llenarTree(pos) {
         console.log(pos);
@@ -133,13 +140,13 @@
             for (var i = 0; i < Perfiles[pos].ListPerfil_Modulos.length; i++) {
                 var Nivel = "";
                 if (Perfiles[pos].ListPerfil_Modulos[i].Nivel == 1) {
-                    Nivel = '<span class="badge bg-green ">ADMINISTRATOR</span>';
+                    Nivel = '<span class="badge  badge-success ">ADMINISTRATOR</span>';
                 }
                 if (Perfiles[pos].ListPerfil_Modulos[i].Nivel == 2) {
-                    Nivel = '<span class="badge bg-red ">SUPERVISOR</span>';
+                    Nivel = '<span class="badge badge-danger ">SUPERVISOR</span>';
                 }
-                if (Perfiles[pos].ListPerfil_Modulos[i].Nivel == 3) {
-                    Nivel = '<span class="badge bg-yellow ">OPERATOR</span>';
+                if (Perfiles[pos].ListPerfil_Modulos[i].Nivel >= 3) {
+                    Nivel = '<span class="badge badge-warning ">OPERATOR</span>';
                 }
                 $("#ModulosPerfil").append(' <li>' + Perfiles[pos].ListPerfil_Modulos[i].ModuloName + ' - '+ Nivel +'</li>');
             }

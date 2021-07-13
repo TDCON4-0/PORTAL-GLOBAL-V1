@@ -582,12 +582,21 @@
     var Areas;
 
     function FillAreas() {
-        var sURL = IPWS + "Usuarios/GetAllAreas";
+        var para = {
+            "All": 0,
+
+        };
+        var sURL = IPWS + "GetAllAreas";
         $.ajax({
             url: sURL,
             dataType: "json",
             type: "GET",
             async: false,
+            data:para,
+            headers: {
+                Authorization: 'Bearer ' + Token
+            },
+            data: { All: 1 },
             success: function (data) {
                 if (data[0].AreaName != null) {
                     Areas = data;
@@ -606,12 +615,15 @@
     var PerfilesUusarios;
 
     function FillPerfilesUsuarios() {
-        var sURL = IPWS + "Usuarios/getAllPerfilesUsuarios";
+        var sURL = IPWS + "getAllPerfilesUsuarios";
         $.ajax({
             url: sURL,
             dataType: "json",
             type: "GET",
             async: false,
+            headers: {
+                Authorization: 'Bearer ' + Token
+            },
             success: function (data) {
                 if (data[0].PerfilName != null) {
                     PerfilesUusarios = data;
@@ -630,13 +642,20 @@
     var Roles;
 
     function FillRol() {
+        var para = {
+            "All": 0,
 
-        var sURL = IPWS + "Usuarios/GetAllRoles";
+        };
+        var sURL = IPWS + "GetAllRoles";
         $.ajax({
             url: sURL,
             dataType: "json",
             type: "GET",
             async: false,
+            data:para,
+            headers: {
+                Authorization: 'Bearer ' + Token
+            },
             success: function (data) {
                 if (data[0].RolName != null) {
                     roles = data;
@@ -659,8 +678,8 @@
 
 
 
-    AutocompleteItem("#Company", "Usuarios/AutocompleteCompany", "Get");
-    AutocompleteItem("#Department", "Usuarios/AutocompleteDepartamento", "Get");
+    AutocompleteItem("#Company", "AutocompleteCompany", "Get");
+    AutocompleteItem("#Department", "AutocompleteDepartamento", "Get");
 
     function AutocompleteItem(item, urlWS, metodo, op) {
         $(item).autocomplete({
@@ -674,6 +693,9 @@
                     url: IPWS + urlWS,
                     data: param,
                     dataType: "json",
+                    headers: {
+                        Authorization: 'Bearer ' + Token
+                    },
                     success: function (data) {
                         if (data[0].item != null) {
                             response(data);
@@ -973,7 +995,7 @@
     }
     var datosUserTags;
     function getTagsValidar() {
-        var sURL = IPWS + "/Usuarios/validarTag";
+        var sURL = IPWS + "validarTag";
         $.ajax({
             url: sURL,
             dataType: "json",
@@ -985,6 +1007,9 @@
                 cors: false
             },
             cache: false,
+            headers: {
+                Authorization: 'Bearer ' + Token
+            },
             success: function (data) {
                 if (data.Status == "ERROR") {
                     Swal.fire('Error!', data.Mensaje, 'error');
@@ -1031,7 +1056,7 @@
             "Id": "@ViewBag.IDUsuario"
         };
 
-        var sURL = IPWS + "/Usuarios/getUsers";
+        var sURL = IPWS + "getUsers";
         $.ajax({
             url: sURL,
             dataType: "json",
@@ -1045,6 +1070,9 @@
             cache: false,
             //data: para,
             //dataFilter: function (data) { return data; },
+            headers: {
+                Authorization: 'Bearer ' + Token
+            },
             success: function (data) {
                 if (data.Status == "ERROR") {
                     Swal.fire('Error!', data.Mensaje, 'error');
@@ -1131,17 +1159,27 @@
                     "IDPerfilUsuario": IDPerfilUsuario,
                     "IDArea": Area,
                 };
-                var sURL = IPWS + "/Usuarios/UpdateUsuario";
+                var sURL = IPWS + "UpdateUsuario";
                 $.ajax({
                     url: sURL,
                     dataType: "json",
+                    contentType: 'application/json',
                     type: "POST",
                     async: false,
-                    data: para,
+                    data: JSON.stringify(para),
+                    headers: {
+                        Authorization: 'Bearer ' + Token
+                    },
                     success: function (data) {
                         if (data.Status == "OK") {
+                            
+                            Swal.fire(
+                                'OK!',
+                                'THE USER HAS BEEN MODIFICADED!',
+                                'success'
+                            );
 
-                            Swal.fire('OK!', 'YOUR FILE HAS BEEN MODIFICADED!', 'success');
+                          
                             HomeUsuarios();
                         } else {
                             Swal.fire('ERROR!', 'ERROR MODIFICADED DATA!', 'danger');

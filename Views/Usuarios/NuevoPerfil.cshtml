@@ -73,7 +73,7 @@
     .app-search .has-success .dd-handle:focus,
     .has-success .app-search .dd3-content:focus,
     .app-search .has-success .dd3-content:focus {
-        border-color: rgba(113, 170, 104, 0.5);
+        border-color: rgb(21 158 0);
     }
 
         .has-success .form-control:focus,
@@ -209,7 +209,7 @@
     .app-search .has-error .dd-handle:focus,
     .has-error .app-search .dd3-content:focus,
     .app-search .has-error .dd3-content:focus {
-        border-color: rgba(218, 71, 58, 0.5);
+        border-color: rgb(252 22 2);
     }
 
         .has-error .form-control:focus,
@@ -397,6 +397,11 @@
         font-size: 125%;
     }
 
+
+
+
+
+
     .dropdown {
         position: relative;
         display: inline-block;
@@ -454,19 +459,19 @@
                     <label class="col-form-label col-md-3 col-sm-3 label-align" for="first-name">
                         Profile Name <span class="required">*</span>
                     </label>
-                    <div class="col-md-6 col-sm-6 ">
-                        <input type="text" id="ProfileName" required="required" class="form-control ">
+                    <div class="col-md-6 col-sm-6 " id="div2">
+                        <input type="text" id="ProfileName" required="required" class="form-control validar">
                     </div>
                 </div>
                 <h2>Modules Information </h2>
                 <hr />
                 <br>
-                <div class="item form-group">
+                <div class="item form-group" id="divComboModulo">
                     <label class="col-form-label col-md-3 col-sm-3 label-align">
                         Modules <span class="required">*</span>
                     </label>
                     <div class="col-md-6 col-sm-6 ">
-                        <select id="ComboPerfiles" class="form-control validarCombo" data-toggle="tooltip" data-placement="right"
+                        <select id="ComboModulos" class="form-control validarCombo" data-toggle="tooltip" data-placement="right"
                                 title="" data-original-title="Select the type of schedule">
                             <option value="Select Option" disabled selected="selected">Select Option</option>
                         </select>
@@ -482,21 +487,22 @@
                     </label>
                     <div class="col-md-6 col-sm-6 ">
                         <select id="ComboRoles" class="form-control validarCombo" data-toggle="tooltip" data-placement="right"
-                                title="" data-original-title="Select the type of schedule " onchange="addPerfiles()">
+                                title="" data-original-title="Select the type of schedule " onchange="AddModulos()">
                             <option value="Select Option" disabled selected="selected">Select Option</option>
                         </select>
                         <br /><br />
                         <div id="divPerfilesButton" class="form-group">
-                            <div id="PerfilesButton" style=' margin: 1rem;  padding: 1rem;  border: 2px solid #ccc; background-color: #fafafa;'>
+                            <div id="ModulosButton" style=' margin: 1rem;  padding: 1rem;  border: 2px solid #ccc; background-color: #fafafa;'>
                             </div>
                         </div>
-                        <input type="text" class="" id="idModulos">
                     </div>
 
                     <br>
                 </div>
-
-                <div class="item form-group">
+                <h2>Buildings Information </h2>
+                <hr />
+                <br>
+                <div class="item form-group" id="divComboEdificios">
                     <label class="col-form-label col-md-3 col-sm-3 label-align">
                         Buildings <span class="required">*</span>
                     </label>
@@ -510,13 +516,14 @@
                             <div id="EdificiosButton" style=' margin: 1rem;  padding: 1rem;  border: 2px solid #ccc; background-color: #fafafa;'>
                             </div>
                         </div>
-                        <input type="text" class="" id="idEdificios">
                     </div>
 
                     <br>
                 </div>
-
-                <div class="item form-group">
+                <h2>Systems Information </h2>
+                <hr />
+                <br>
+                <div class="item form-group" id="divComboSistemas">
                     <label class="col-form-label col-md-3 col-sm-3 label-align">
                         Systems <span class="required">*</span>
                     </label>
@@ -527,17 +534,16 @@
                         </select>
                         <br /><br />
                         <div id="divPerfilesButton" class="form-group">
-                            <div id="SistemassButton" style=' margin: 1rem;  padding: 1rem;  border: 2px solid #ccc; background-color: #fafafa;'>
+                            <div id="SistemasButton" style=' margin: 1rem;  padding: 1rem;  border: 2px solid #ccc; background-color: #fafafa;'>
                             </div>
                         </div>
-                        <input type="text" class="" id="idSistemas">
                     </div>
 
                     <br>
                 </div>
             </div>
         </div>
-       
+
 
         <div class="col-md-12" id="divMensajeError" style="display:none">
             <div class="alert alert-danger alert-dismissable">
@@ -551,7 +557,7 @@
     </div>
     <div class="form-group row form-group row pull-left">
         <div class="col-md-12">
-            <button type="button" class="btn btn-primary" onclick="HomeUsuarios();">Cancel</button>
+            <button type="button" class="btn btn-primary" onclick="Home();">Cancel</button>
             <input type="button" value="Save" class="btn btn-success" id="SaveUserF" onclick="validaciones();">
         </div>
     </div>
@@ -573,22 +579,14 @@
 
 
 
-
-
-
-
-
-
-
-
 <script>
-    var click = 0;
-    var ArrCompany = [];
-    var ArrCompany1 = [];
-    var ArrDep = [];
-    var ArrDep1 = [];
-    var ArrManager = [];
-    var ArrManager1 = [];
+    var PerfilData = {
+        "ID": 0,
+        "PerfilName": "",
+        "ListPerfil_Modulos": [],
+        "ListPerfil_Sistemas": [],
+        "ListPerfil_Edificios": [],
+    };
     $("#SaveUser").hide();
 
 
@@ -603,226 +601,7 @@
 
     };
 
-    var objDepartamentos = "";
-    var objIDDepa = "";
-    var objDepartamneto = [];
-    var objID = [];
-    var bandera = 0;
-    function addPerfiles() {
-        if ($('#ComboPerfiles').val() != 'Select Option') {
 
-            $("#ComboPerfiles").addClass("has-ok has-success");
-            $("#ComboPerfiles").removeClass("has-error has-danger");
-
-
-            var arreDest = objDepartamentos.split(",");
-            if (arreDest.length > 0) {
-                for (let x = 0; x < arreDest.length; x++) {
-                    if (arreDest[x] == $('#ComboPerfiles option:selected').text() && arreDest[x] != "") {
-                        bandera = 1;
-
-
-                        break;
-                    } else {
-                        bandera = 0;
-                    }
-
-                }
-            }
-
-
-
-            if (bandera == 0) {
-                objDepartamentos = objDepartamentos + $('#ComboPerfiles option:selected').text() + ',';
-                objIDDepa = objIDDepa + $('#ComboPerfiles ').val() + ',';
-                objDepartamneto = objDepartamentos;
-                objID = objIDDepa;
-                $('#ComboPerfiles option:selected').attr('disabled', true);
-                $('#idModulos').val(objIDDepa);
-                $('#PerfilesButton').empty();
-                arreDest = objDepartamentos.split(",");
-                arreDest.forEach(function (valor, indice, array) {
-                    if (valor != "") {
-
-                        if (bandera == 0) {
-                            $('#PerfilesButton').append(
-                                '<div class="dropdown"> <button class="dropbtn">' + valor +
-                                '</button> <div class="dropdown-content"> <a href="javascript:eliminarDep(' +
-                                "'" + valor + "'" +
-                                ');"><i class="fa fa-remove"></i>&nbsp;&nbsp;Delete</a> </div></div>'
-                            );
-                        }
-
-                    }
-
-                });
-            }
-
-
-
-
-
-        } else {
-            $("#ComboPerfiles").removeClass("has-ok has-success");
-            $("#ComboPerfiles").addClass("has-error has-danger");
-            swal("Error", "Please add correct information", "error");
-            $('#PerfilesButton').empty();
-        }
-
-
-    }
-
-    function eliminarDep(depa) {
-
-
-        var id;
-        var objSepararDepartamneto = objDepartamneto.split(",");
-        var objSepararID = objIDDepa.split(",");
-        var idDepartamento = "";
-        for (let i = 0; i < objSepararDepartamneto.length - 1; i++) {
-            if (objSepararDepartamneto[i] == depa) {
-                idDepartamento = objSepararID[i];
-                id = idDepartamento;
-                if (idDepartamento == objSepararID[i]) {
-                    objSepararID.splice(i, 1);
-                    $('#ComboPerfiles option[value="' + id + '"]').attr('disabled', false);
-                    objSepararDepartamneto.splice(i, 1);
-                    objDepartamneto = objDepartamneto.replace(depa + ',', '');
-                    objIDDepa = objIDDepa.replace(id + ',', '');
-                    objDepartamentos = objDepartamneto;
-
-                }
-                break;
-            }
-        }
-        $('#idModulos').val(objSepararID);
-        $('#PerfilesButton').empty();
-
-        objSepararDepartamneto.forEach(function (valor, indice, array) {
-            if (valor != "") {
-                $('#PerfilesButton').append(
-                    '<div class="dropdown"> <button class="dropbtn">' + valor +
-                    '</button> <div class="dropdown-content"> <a href="javascript:eliminarDep(' +
-                    "'" + valor + "'" +
-                    ');"><i class="fa fa-remove"></i>&nbsp;&nbsp;Delete</a> </div></div>'
-                );
-            }
-
-        });
-
-
-    }
-
-    // EDIFICIOSSSS
-    var objEdicifios  = "";
-    var objIDEdicifios = "";
-    var objEdicifios  = [];
-    var objID2 = [];
-    var bandera = 0;
-    function addPerfiles() {
-        if ($('#ComboEdicifios ').val() != 'Select Option') {
-
-            $("#ComboEdicifios s").addClass("has-ok has-success");
-            $("#ComboEdicifios ").removeClass("has-error has-danger");
-
-
-            var arreDest = objEdicifios .split(",");
-            if (arreDest.length > 0) {
-                for (let x = 0; x < arreDest.length; x++) {
-                    if (arreDest[x] == $('#ComboPerfiles option:selected').text() && arreDest[x] != "") {
-                        bandera = 1;
-
-
-                        break;
-                    } else {
-                        bandera = 0;
-                    }
-
-                }
-            }
-
-
-
-            if (bandera == 0) {
-                objEdicifios = objEdicifios + $('#ComboEdicifios  option:selected').text() + ',';
-                objIDEdicifios = objIDEdicifios + $('#ComboEdicifios  ').val() + ',';
-                objEdicifios  = objEdicifios ;
-                objID2 = objIDEdicifios ;
-                $('#ComboEdicifios  option:selected').attr('disabled', true);
-                $('#idEdicifios ').val(objIDEdicifios );
-                $('#Edicifios Button').empty();
-                arreDest = objEdicifios .split(",");
-                arreDest.forEach(function (valor, indice, array) {
-                    if (valor != "") {
-
-                        if (bandera == 0) {
-                            $('#Edicifios Button').append(
-                                '<div class="dropdown"> <button class="dropbtn">' + valor +
-                                '</button> <div class="dropdown-content"> <a href="javascript:eliminarEdicifios (' +
-                                "'" + valor + "'" +
-                                ');"><i class="fa fa-remove"></i>&nbsp;&nbsp;Delete</a> </div></div>'
-                            );
-                        }
-
-                    }
-
-                });
-            }
-
-
-
-
-
-        } else {
-            $("#Edicifios Perfiles").removeClass("has-ok has-success");
-            $("#Edicifios Perfiles").addClass("has-error has-danger");
-            swal("Error", "Please add correct information", "error");
-            $('#Edicifios Button').empty();
-        }
-
-
-    }
-
-    function eliminarEdicifios (depa) {
-
-
-        var id;
-        var objSepararEdicifios = objEdicifios .split(",");
-        var objSepararID = objIDEdicifios .split(",");
-        var idEdicifios  = "";
-        for (let i = 0; i < objSepararEdicifios .length - 1; i++) {
-            if (objSepararEdicifios [i] == depa) {
-                idEdicifios  = objSepararID[i];
-                id = idEdicifios ;
-                if (idEdicifios  == objSepararID[i]) {
-                    objSepararID.splice(i, 1);
-                    $('#ComboEdicifios  option[value="' + id + '"]').attr('disabled', false);
-                    objSepararEdicifios .splice(i, 1);
-                    objEdicifios = objEdicifios .replace(depa + ',', '');
-                    objIDEdicifios = objIDEdicifios .replace(id + ',', '');
-                    objEdicifios = objEdicifios ;
-
-                }
-                break;
-            }
-        }
-        $('#idEdicifios ').val(objSepararID);
-        $('#Edicifios sButton').empty();
-
-        objSepararEdicifios .forEach(function (valor, indice, array) {
-            if (valor != "") {
-                $('#PerfilesButton').append(
-                    '<div class="dropdown"> <button class="dropbtn">' + valor +
-                    '</button> <div class="dropdown-content"> <a href="javascript:eliminarEdicifios (' +
-                    "'" + valor + "'" +
-                    ');"><i class="fa fa-remove"></i>&nbsp;&nbsp;Delete</a> </div></div>'
-                );
-            }
-
-        });
-
-
-    }
 
     $("#Phone").keypress(function (e) {
         var x = e.target.value.replace(/\D/g, '').match(/(\d{0,3})(\d{0,3})(\d{0,4})/);
@@ -832,19 +611,26 @@
     var Modulos;
 
     function FillModulos() {
+        var para = {
+            "All": 0,
 
+        };
 
-        var sURL = IPWS + "Usuarios/getAllModules";
+        var sURL = IPWS + "getAllModules";
         $.ajax({
             url: sURL,
             dataType: "json",
             type: "GET",
             async: false,
+            data:para,
+            headers: {
+                Authorization: 'Bearer ' + Token
+            },
             success: function (data) {
                 if (data[0].ModuloName != null) {
                     Modulos = data;
                     for (var i = 0; i < Modulos.length; i++) {
-                        $("#ComboPerfiles").append('<option value="' + Modulos[i].ID +
+                        $("#ComboModulos").append('<option value="' + Modulos[i].ID +
                             '" data-id=" ' + Modulos[i].ID + '" data-pos="' + i + '" >' + Modulos[i].ModuloName + ' </option>');
                     }
                 }
@@ -862,13 +648,19 @@
     var Roles;
 
     function FillRol() {
-
-        var sURL = IPWS + "Usuarios/GetAllRoles";
+        var para = {
+            "All": 0,
+        };
+        var sURL = IPWS + "GetAllRoles";
         $.ajax({
             url: sURL,
             dataType: "json",
             type: "GET",
             async: false,
+            data:para,
+            headers: {
+                Authorization: 'Bearer ' + Token
+            },
             success: function (data) {
                 if (data[0].RolName != null) {
                     roles = data;
@@ -892,13 +684,19 @@
     var Edificios;
 
     function FillEdificios() {
-
-        var sURL = IPWS + "Usuarios/getAllEdificios";
+        var para = {
+            "All": 0,
+        };
+        var sURL = IPWS + "getAllEdificios";
         $.ajax({
             url: sURL,
             dataType: "json",
             type: "GET",
             async: false,
+            data:para,
+            headers: {
+                Authorization: 'Bearer ' + Token
+            },
             success: function (data) {
                 if (data[0].EdificioName != null) {
                     Edificios = data;
@@ -921,13 +719,19 @@
     var sistemas;
 
     function FillSistemas() {
-
-        var sURL = IPWS + "Usuarios/getAllSystems";
+        var para = {
+            "All": 0,
+        };
+        var sURL = IPWS + "getAllSystems";
         $.ajax({
             url: sURL,
             dataType: "json",
             type: "GET",
             async: false,
+            data:para,
+            headers: {
+                Authorization: 'Bearer ' + Token
+            },
             success: function (data) {
                 if (data[0].SistemaName != null) {
                     sistemas = data;
@@ -972,280 +776,118 @@
 
                 $("#" + inputs[i].parentNode.id).addClass("has-ok has-success");
                 $("#" + inputs[i].parentNode.id).removeClass("has-error has-danger");
-                //var Company = $("#Company").val();
-                //var manager = $("#manager").val();
-
-                //var resultCompany = validarAutocomplete(ArrCompany1, Company);
-                //var resultManager = validarAutocomplete(ArrManager1, manager);
-                //if (resultCompany == "true") {
-                //    $("#DivCompany").addClass("has-ok has-success");
-                //    $("#DivCompany").removeClass("has-error has-danger");
-                //    band.push(0);
-                //} else {
-                //    $("#DivCompany").removeClass("has-ok has-success");
-                //    $("#DivCompany").addClass("has-error has-danger");
-                //    band.push(2);
-                //}
-
-                //if (resultManager == "true") {
-                //    $("#DivManager").addClass("has-ok has-success");
-                //    $("#DivManager").removeClass("has-error has-danger");
-                //    band.push(0);
-                //} else {
-                //    $("#DivManager").removeClass("has-ok has-success");
-                //    $("#DivManager").addClass("has-error has-danger");
-                //    band.push(3);
-                //}
 
             }
 
         }
 
 
-        var languague = $("#Languague").val();
-        var Combos = $(".validarCombo");
-        console.log("combo");
-        for (let i = 0; i < Combos.length; i++) {
-            if (Combos[i].value == "Select Option") {
-                $("#" + Combos[i].parentNode.id).removeClass("has-ok has-success");
-                $("#" + Combos[i].parentNode.id).addClass("has-error has-danger");
-                band.push(1);
-            } else {
 
-                $("#" + Combos[i].parentNode.id).addClass("has-ok has-success");
-                $("#" + Combos[i].parentNode.id).removeClass("has-error has-danger");
-                band.push(0);
-            }
-
+        if (PerfilData.ListPerfil_Modulos.length == 0) {
+            $("#divComboModulo").removeClass("has-ok has-success");
+            $("#divComboModulo").addClass("has-error has-danger");
+            band.push(1);
         }
+        else {
+            $("#divComboModulo").addClass("has-ok has-success");
+            $("#divComboModulo").removeClass("has-error has-danger");
+            band.push(0);
+        }
+
+
+        if (PerfilData.ListPerfil_Sistemas.length == 0) {
+            $("#divComboSistemas").removeClass("has-ok has-success");
+            $("#divComboSistemas").addClass("has-error has-danger");
+            band.push(1);
+        }
+        else {
+            $("#divComboSistemas").addClass("has-ok has-success");
+            $("#divComboSistemas").removeClass("has-error has-danger");
+            band.push(0);
+        }
+
+
+        if (PerfilData.ListPerfil_Edificios.length == 0) {
+            $("#divComboEdificios").removeClass("has-ok has-success");
+            $("#divComboEdificios").addClass("has-error has-danger");
+            band.push(1);
+        }
+        else {
+            $("#divComboEdificios").addClass("has-ok has-success");
+            $("#divComboEdificios").removeClass("has-error has-danger");
+            band.push(0);
+        }
+
         var band2 = 0;
-
         var result = $.inArray(1, band);
-        var result2 = $.inArray(2, band);
-        var result3 = $.inArray(3, band);
         if (result != -1) {
             band2 = 1;
 
-        } else if (result2 != -1) {
-
-            band2 = 2;
-        } else if (result3 != -1) {
-
-            band2 = 3;
         }
-
-
         if (band2 == 0) {
             //ok
-            var valcorreo = validarcorreo();
-            if (valcorreo == true) {
-                SaveUser2();
-            }
+            saveData();
 
         } else if (band2 == 1) {
 
             $('#divMensajeError').show();
             $('#mensajeError').html(textIdioma1);
             return false;
-        } else if (band2 == 2) {
-            $('#divMensajeError').hide();
-            $('#divMensajeError').show();
-            $('#mensajeError').html(alertCompanyInvalid);
-            return false;
-        } else if (band2 == 3) {
-            $('#divMensajeError').hide();
-            $('#divMensajeError').show();
-            $('#mensajeError').html(alertManagerInvalid);
-            return false;
-        }
+        } 
 
     }
 
-    function validarAutocomplete(array, value) {
-        var result = $.inArray(value, array);
-        if (result != -1) {
-            return "true";
-        } else {
-            return "false";
-        }
-    }
-
-    function validateStep1() {
-        var textIdioma1 = "";
-        var Idioma = "English";
-        var alertInvalid = '<i class="fa fa-warning  pr-15 pull-left"></i> Error: The department is invalid.';
-        if (Idioma == "Espanol") {
-            textIdioma1 = "Error: favor de llenar correctamente todos los campos";
-        }
-        if (Idioma == "English") {
-            textIdioma1 = '<i class="fa fa-warning  pr-15 pull-left"></i> Error: please fill in all fields correctly.';
-        }
-        $('#divMensajeError').hide();
-        var band = []
-        var inputs = $(".validar");
-        for (let i = 0; i < inputs.length; i++) {
-
-            if (inputs[i].id == "Name" || inputs[i].id == "LastName" || inputs[i].id == "SecondLastName" || inputs[i].id == "UserName" || inputs[i].id == "Password" || inputs[i].id ==
-                "department") {
-                if (inputs[i].value == "") {
-                    $("#" + inputs[i].parentNode.id).removeClass("has-ok has-success");
-                    $("#" + inputs[i].parentNode.id).addClass("has-error has-danger");
-                    band.push(1);
-                } else {
-
-                    $("#" + inputs[i].parentNode.id).addClass("has-ok has-success");
-                    $("#" + inputs[i].parentNode.id).removeClass("has-error has-danger");
-                    var department = $("#department").val();
-                    var result = validarAutocomplete(ArrDep1, department);
-                    if (result == "true") {
-                        $("#" + inputs[i].parentNode.id).addClass("has-ok has-success");
-                        $("#" + inputs[i].parentNode.id).removeClass("has-error has-danger");
-                        band.push(0);
-                    } else {
-                        $("#Divdep").removeClass("has-ok has-success");
-                        $("#Divdep").addClass("has-error has-danger");
-                        band.push(2);
-                    }
-                }
-            }
-
-
-        }
-
-        var Combos = $(".validarCombo");
-        for (let i = 0; i < Combos.length; i++) {
-
-            if (Combos[i].id == "Rol") {
-                if (Combos[i].value == "Select Option") {
-                    $("#" + Combos[i].parentNode.id).removeClass("has-ok has-success");
-                    $("#" + Combos[i].parentNode.id).addClass("has-error has-danger");
-                    band.push(1);
-                } else {
-                    $("#" + Combos[i].parentNode.id).addClass("has-ok has-success");
-                    $("#" + Combos[i].parentNode.id).removeClass("has-error has-danger");
-                    band.push(0);
-                }
-            }
-        }
-
-
-        var band2 = 0;
-
-        var result = $.inArray(1, band);
-        var result2 = $.inArray(2, band);
-        if (result != -1) {
-            band2 = 1;
-
-        } else if (result2 != -1) {
-
-            band2 = 2;
-        }
 
 
 
-        if (band2 == 0) {
 
-            $('#divMensajeError').hide();
-            return true;
 
-        } else if (band2 == 1) {
-
-            $('#divMensajeError').show();
-            $('#mensajeError').html(textIdioma1);
-            return false;
-        } else if (band2 == 2) {
-            $('#divMensajeError').hide();
-            $('#divMensajeError').show();
-            $('#mensajeError').html(alertInvalid);
-            return false;
-        }
+    function Home() {
+        UpdateContenedor('Usuarios/ProfileUser');;
     }
 
 
-    function HomeUsuarios() {
-        UpdateContenedor('Usuarios/AllUsuarios');;
-    }
-
-
-    function SaveUser2() {
-
-        var Name = $('#Name').val();
-        var LastName = $('#LastName').val();
-        var SecondLastName = $('#SecondLastName').val();
-        var Password = $('#Password').val();
-        var UserName = $('#UserName').val();
-        var Rol = $('#Rol option:selected').val();
-        var Idioma = $('#Languague option:selected').val();
-        var Telefono = $('#Phone').val();
-        var Correo = $('#Email').val();
-        var Compania = $('#Company').val();
-        var manager = $('#Manager').val();
-        var department = $('#Department').val();
-        var Tag1 = $('#Tag1').val();
-        var Tag2 = $('#Tag2').val();
-
-        var FisrtStep;
-        var SecondStep;
-
+    function saveData() {
 
         Swal.fire({
             title: 'Are you sure?',
-            text: "This user will be seved!",
-            icon: 'warning',
+            text: "This user profile will be seved!",
+            icon: 'question',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, saved it!'
+            confirmButtonText: 'Yes, save it!'
         }).then((result) => {
             if (result.isConfirmed) {
-                var para = {
-                    "Nombre": Name,
-                    "LastName": LastName,
-                    "SecondLastName": SecondLastName,
-                    "UserName": UserName,
-                    "Password": Password,
-                    "IdRol": parseInt($('#Rol option:selected').val()),
-                    "IdIdioma": parseInt($('#Languague option:selected').val()),
-                    "Telefono": Telefono,
-                    "Correo": Correo,
-                    "Status": "1",
-                    "Compania": Compania,
-                    "Manager": manager,
-                    "Departamento": department,
-                    "Tag1": Tag1,
-                    "Tag2": Tag2,
-
-
-                };
-
-                var sURL = IPWS + "/Usuarios/AddUsuario";
-
+                var sURL = IPWS + "AddPerfilUsuario";
+                PerfilData.PerfilName = $("#ProfileName").val();
                 $.ajax({
                     url: sURL,
                     dataType: "json",
+                    contentType: 'application/json',
                     type: "POST",
-
-
+                    data: JSON.stringify(PerfilData),
                     async: false,
-
-                    data: para,
-
+                    headers: {
+                        Authorization: 'Bearer ' + Token
+                    },
 
                     success: function (data) {
 
 
                         if (data.Status == "OK") {
                             Swal.fire(
-                                '',
-                                'Your file has been deleted.',
+                                'OK!', 
+                                'THE PROFILE USER SAVED SUCCESSFULLY!',
                                 'success'
-                            )
-                            swal("OK! THE USER SAVED SUCCESSFULLY!", {
-                                icon: "success",
-                            });
-                            HomeUsuarios();
+                            );
+                            Home();
                         } else {
-                            swal("Error", "ERROR SAVING DATA", "error");
+                            Swal.fire(
+                                'ERROR!',
+                                'ERROR TO SAVED DATA.',
+                                'error'
+                            )
                         }
 
                         //llenarCombos();
@@ -1260,18 +902,249 @@
                     }
                 });
 
+                
             }
-        })
+        });                
+    }
 
 
+    //MOODULOS
 
+    function AddModulos() {
+        // debugger
 
+        if ($('#ComboModulos').val() != 'Select Option' && $('#ComboModulos').val() != null && $('#ComboModulos').val() !="null" )  {
+            if (PerfilData.ListPerfil_Modulos.length > 0) {
+                var bandera = 0;
+                for (var i = 0; i < PerfilData.ListPerfil_Modulos.length; i++) {
+                    var item = PerfilData.ListPerfil_Modulos[i];
+                    if (item != null || item != undefined) {
+                        if (item.ModuloName == $('#ComboModulos option:selected').text().trim()) {
+                            bandera = 1;
+                            break;
+                        }
 
+                    }
+                }
+
+                if (bandera == 0) {
+                    PerfilData.ListPerfil_Modulos.push({
+                        IDModulo: parseInt($('#ComboModulos option:selected').val()),
+                        ModuloName: $('#ComboModulos option:selected').text().trim(),
+                        Nivel: parseInt($('#ComboRoles').val())
+                    });
+                    $('#ComboModulos option:selected').attr('disabled', true);
+                }
+            } else {
+                PerfilData.ListPerfil_Modulos.push({
+                    IDModulo: parseInt($('#ComboModulos option:selected').val()),
+                    ModuloName: $('#ComboModulos option:selected').text().trim(),
+                    Nivel: parseInt($('#ComboRoles').val())
+                });
+                $('#ComboModulos option:selected').attr('disabled', true);
+            }
+
+        } else {
+            $('#ModulosButton').empty();
+        }
+        $("#ComboRoles").val('Select Option');
+        $("#ComboModulos").val('Select Option');
+
+        llenarBotones();
+
+    }
+    function llenarBotones() {
+        //modulos
+        $('#ModulosButton').empty();
+
+        PerfilData.ListPerfil_Modulos.forEach(function (item, indice, array) {
+
+            if (item != null || item != undefined) {
+                var vcss = "";
+                //debugger
+                if (item.Nivel == 1) {
+                    vcss = 'style= " background-color: #007bff;"';
+                }
+                if (item.Nivel == 2) {
+                    vcss = 'style= " background-color: #dc3545;"';
+
+                }
+                if (item.Nivel == 3) {
+                    vcss = 'style= " background-color: #ffc107;"';
+                }
+                $('#ModulosButton').append(
+                    '<div class="dropdown"> <button class="dropbtn"  ' + vcss + '>' + item.ModuloName +
+                    '</button> <div class="dropdown-content"  > <a href="javascript:eliminarModulos(' +
+                    "'" + item.ModuloName + "'" +
+                    ');"><i class="fa fa-remove"></i>&nbsp;&nbsp;Delete</a> </div></div>'
+                );
+            }
+
+        });
+        //Edificios
+        $('#EdificiosButton').empty();
+
+        PerfilData.ListPerfil_Edificios.forEach(function (item2, indice, array) {
+            $('#EdificiosButton').append(
+                '<div class="dropdown"> <button class="dropbtn" >' + item2.EdificioName +
+                '</button> <div class="dropdown-content"  > <a href="javascript:eliminarEdificios(' +
+                "'" + item2.EdificioName + "'" +
+                ');"><i class="fa fa-remove"></i>&nbsp;&nbsp;Delete</a> </div></div>'
+            );
+        });
+
+        //Sistemas
+        $('#SistemasButton').empty();
+
+        PerfilData.ListPerfil_Sistemas.forEach(function (item2, indice, array) {
+            $('#SistemasButton').append(
+                '<div class="dropdown"> <button class="dropbtn" >' + item2.SistemaName +
+                '</button> <div class="dropdown-content"  > <a href="javascript:eliminarSistemas(' +
+                "'" + item2.SistemaName + "'" +
+                ');"><i class="fa fa-remove"></i>&nbsp;&nbsp;Delete</a> </div></div>'
+            );
+        });
+    }
+
+    function eliminarModulos(Mod) {
+
+        var bandera = 0;
+        var pos = 0;
+        for (var i = 0; i < PerfilData.ListPerfil_Modulos.length; i++) {
+            var item = PerfilData.ListPerfil_Modulos[i];
+            if (item != null || item != undefined) {
+                if (item.ModuloName == Mod.trim()) {
+                    $('#ComboModulos option[value="' + item.IDModulo + '"]').attr('disabled', false);
+                    PerfilData.ListPerfil_Modulos.splice(i, 1);
+                    break;
+                }
+
+            }
+        }
+        llenarBotones();
 
     }
 
 
+    //EDIFICIOS
+    function AddEdificios() {
+        if ($('#ComboEdificios').val() != 'Select Option') {
+            if (PerfilData.ListPerfil_Edificios.length > 0) {
+                var bandera = 0;
+                for (var i = 0; i < PerfilData.ListPerfil_Edificios.length; i++) {
+                    var item = PerfilData.ListPerfil_Edificios[i];
+                    if (item != null || item != undefined) {
+                        if (item.EdificioName == $('#ComboEdificios option:selected').text().trim()) {
+                            bandera = 1;
+                            break;
+                        }
 
+                    }
+                }
+
+                if (bandera == 0) {
+                    PerfilData.ListPerfil_Edificios.push({
+                        IDEdificio: parseInt($('#ComboEdificios option:selected').val()),
+                        EdificioName: $('#ComboEdificios option:selected').text().trim(),
+                    });
+                    $('#ComboEdificios option:selected').attr('disabled', true);
+                }
+            } else {
+                PerfilData.ListPerfil_Edificios.push({
+                    IDEdificio: parseInt($('#ComboEdificios option:selected').val()),
+                    EdificioName: $('#ComboEdificios option:selected').text().trim(),
+                });
+                $('#ComboEdificios option:selected').attr('disabled', true);
+            }
+
+        } else {
+            $('#EdificiosButton').empty();
+        }
+        $("#ComboEdificios").val('Select Option');
+        llenarBotones();
+
+    }
+
+    function eliminarEdificios(Mod) {
+        for (var i = 0; i < PerfilData.ListPerfil_Edificios.length; i++) {
+            var item = PerfilData.ListPerfil_Edificios[i];
+            //debugger
+            if (item != null || item != undefined) {
+                if (item.EdificioName == Mod.trim()) {
+                    $('#ComboEdificios option[value="' + item.IDEdificio + '"]').attr('disabled', false);
+                    PerfilData.ListPerfil_Edificios.splice(i, 1);
+                    break;
+                }
+
+            }
+        }
+        llenarBotones();
+
+
+    }
+
+    //sistemas
+
+
+    var objSistemas = "";
+    var objISistemas = "";
+    var objSistemasAdd = [];
+    var objID3 = [];
+    var bandera = 0;
+    function AddSistemas() {
+        if ($('#ComboSistemas').val() != 'Select Option') {
+            if (PerfilData.ListPerfil_Sistemas.length > 0) {
+                var bandera = 0;
+                for (var i = 0; i < PerfilData.ListPerfil_Sistemas.length; i++) {
+                    var item = PerfilData.ListPerfil_Sistemas[i];
+                    if (item != null || item != undefined) {
+                        if (item.SistemaName == $('#ComboSistemas option:selected').text().trim()) {
+                            bandera = 1;
+                            break;
+                        }
+
+                    }
+                }
+
+                if (bandera == 0) {
+                    PerfilData.ListPerfil_Sistemas.push({
+                        IDSistema: parseInt($('#ComboSistemas option:selected').val()),
+                        SistemaName: $('#ComboSistemas option:selected').text().trim(),
+                    });
+                    $('#ComboSistemas option:selected').attr('disabled', true);
+                }
+            } else {
+                PerfilData.ListPerfil_Sistemas.push({
+                    IDSistema: parseInt($('#ComboSistemas option:selected').val()),
+                    SistemaName: $('#ComboSistemas option:selected').text().trim(),
+                });
+                $('#ComboSistemas option:selected').attr('disabled', true);
+            }
+
+        } else {
+            $('#SistemasButton').empty();
+        }
+        $("#ComboSistemas").val('Select Option');
+        llenarBotones();
+
+
+    }
+
+    function eliminarSistemas(Mod) {
+        for (var i = 0; i < PerfilData.ListPerfil_Sistemas.length; i++) {
+            var item = PerfilData.ListPerfil_Sistemas[i];
+            //debugger
+            if (item != null || item != undefined) {
+                if (item.SistemaName == Mod.trim()) {
+                    $('#ComboSistemas option[value="' + item.IDSistema + '"]').attr('disabled', false);
+                    PerfilData.ListPerfil_Sistemas.splice(i, 1);
+                    break;
+                }
+
+            }
+        }
+        llenarBotones();
+    }
 
 </script>
 <!-- Custom Theme Scripts -->

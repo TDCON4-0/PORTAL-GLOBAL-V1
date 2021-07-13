@@ -478,13 +478,17 @@
             "ID": @ViewBag.ID,
 
         };
-        var sURL = IPWS + "Usuarios/getCompanias";
+        var sURL = IPWS + "getCompanias";
         $.ajax({
             url: sURL,
             dataType: "json",
-            type: "GET",
+            type: "POST",
             async: false,
-            data: para,
+            data: JSON.stringify(para),
+            contentType: 'application/json; charset=utf-8',
+            headers: {
+                Authorization: 'Bearer ' + Token
+            },
             success: function (data) {
                 if (data[0].ID != null) {
                      datosCompanies = data;
@@ -536,13 +540,17 @@
             confirmButtonText: 'YES, UPDATE IT!'
         }).then((result) => {
             if (result.isConfirmed) {
-                var sURL = IPWS + "/Usuarios/UpdateCompanias";
+                var sURL = IPWS + "UpdateCompanias";
                 $.ajax({
                     url: sURL,
                     dataType: "json",
+                    contentType: 'application/json',
                     type: "POST",
                     async: false,
-                    data: para,
+                    data: JSON.stringify(para),
+                    headers: {
+                        Authorization: 'Bearer ' + Token
+                    },
                     success: function (data) {
 
                         if (data.Status == "OK") {

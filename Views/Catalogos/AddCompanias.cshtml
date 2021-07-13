@@ -1,7 +1,4 @@
-﻿
-@{
-    Layout = null;
-}
+﻿@{ Layout = null; }
 
 <!DOCTYPE html>
 <style>
@@ -344,8 +341,7 @@
     }
 
     .autocomplete {
-        /*the container must be positioned relative:*/
-        position: relative;
+        /the container must be positioned relative:/ position: relative;
     }
 
     .autocomplete-items {
@@ -354,8 +350,7 @@
         border-bottom: none;
         border-top: none;
         z-index: 99;
-        /*position the autocomplete items to be the same width as the container:*/
-        top: 100%;
+        /position the autocomplete items to be the same width as the container:/ top: 100%;
         left: 2%;
         right: 2%;
     }
@@ -368,13 +363,11 @@
         }
 
             .autocomplete-items div:hover {
-                /*when hovering an item:*/
-                background-color: #e9e9e9;
+                /when hovering an item:/ background-color: #e9e9e9;
             }
 
     .autocomplete-active {
-        /*when navigating through the items using the arrow keys:*/
-        background-color: DodgerBlue !important;
+        /when navigating through the items using the arrow keys:/ background-color: DodgerBlue !important;
         color: #ffffff;
     }
 </style>
@@ -480,13 +473,17 @@
             confirmButtonText: 'YES, SAVE IT!'
         }).then((result) => {
             if (result.isConfirmed) {
-                var sURL = IPWS + "/Usuarios/AddCompanias";
+                var sURL = IPWS + "AddCompanias";
                 $.ajax({
                     url: sURL,
                     dataType: "json",
-                    type: "GET",
+                    contentType: 'application/json',
+                    type: "POST",
                     async: false,
-                    data: para,
+                    data: JSON.stringify(para),
+                    headers: {
+                        Authorization: 'Bearer ' + Token
+                    },
                     success: function (data) {
 
                         if (data.Status == "OK") {
@@ -503,7 +500,7 @@
                             } else {
                                 Swal.fire("Error", "ERROR SAVED DATA", "error");
                             }
-                           
+
                         }
 
                     },
@@ -520,7 +517,7 @@
         });
 
 
-        
+
     }
 
 

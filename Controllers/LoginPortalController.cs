@@ -21,7 +21,7 @@ namespace Portal_Global.Controllers
                 //optiene todos los logs de operacion de una vista
                 Session.Add("UserData", usuario);
                 var x =Session["UserData"];
-                HttpCookie cookie = new HttpCookie("UserName","Login");
+                HttpCookie cookie = new HttpCookie("UserName", usuario.TimeOut);
                 ControllerContext.HttpContext.Response.Cookies.Add(cookie);
                 return Json(Session["UserData"], JsonRequestBehavior.AllowGet);
 

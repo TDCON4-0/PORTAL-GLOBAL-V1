@@ -481,13 +481,16 @@
             confirmButtonText: 'YES, SAVE IT!'
         }).then((result) => {
             if (result.isConfirmed) {
-                var sURL = IPWS + "/Usuarios/AddArea";
+                var sURL = IPWS + "AddArea";
                 $.ajax({
                     url: sURL,
-                    dataType: "json",
-                    type: "GET",
+                    contentType: 'application/json',
+                    type: "POST",
                     async: false,
-                    data: para,
+                    data: JSON.stringify(para),
+                    headers: {
+                        Authorization: 'Bearer ' + Token
+                    },
                     success: function (data) {
 
                         if (data.Status == "OK") {

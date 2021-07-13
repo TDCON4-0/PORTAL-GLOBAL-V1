@@ -454,7 +454,7 @@
         <div class="row">
             <div class="col-md-6">
                 <div id="divCombo4" class="form-group">
-                    <label class="control-label mb-10 text-left">Role * </label>
+                    <label class="control-label mb-10 text-left">Profile User * </label>
                     <select id="Rol" class="form-control validarCombo">
                         <option value="Select Option" disabled selected="selected">Select Option</option>
                     </select>
@@ -583,12 +583,20 @@
     var Areas;
 
     function FillAreas() {
-        var sURL = IPWS + "Usuarios/GetAllAreas";
+        var para = {
+            "All": 0,
+        };
+        var sURL = IPWS + "GetAllAreas";
         $.ajax({
             url: sURL,
             dataType: "json",
             type: "GET",
             async: false,
+            data:para,
+            headers: {
+                Authorization: 'Bearer ' + Token
+            },
+            data: {All:1},
             success: function (data) {
                 if (data[0].AreaName != null) {
                     Areas = data;
@@ -607,12 +615,15 @@
     var PerfilesUusarios;
 
     function FillPerfilesUsuarios() {
-        var sURL = IPWS + "Usuarios/getAllPerfilesUsuarios";
+        var sURL = IPWS + "getAllPerfilesUsuarios";
         $.ajax({
             url: sURL,
             dataType: "json",
             type: "GET",
             async: false,
+            headers: {
+                Authorization: 'Bearer ' + Token
+            },
             success: function (data) {
                 if (data[0].PerfilName != null) {
                     PerfilesUusarios = data;
@@ -631,13 +642,20 @@
     var Roles;
 
     function FillRol() {
+        var para = {
+            "All": 0,
 
-        var sURL = IPWS + "Usuarios/GetAllRoles";
+        };
+        var sURL = IPWS + "GetAllRoles";
         $.ajax({
             url: sURL,
             dataType: "json",
             type: "GET",
             async: false,
+            data:para,
+            headers: {
+                Authorization: 'Bearer ' + Token
+            },
             success: function (data) {
                 if (data[0].RolName != null) {
                     roles = data;
@@ -660,8 +678,8 @@
 
 
 
-    AutocompleteItem("#Company", "Usuarios/AutocompleteCompany", "Get");
-    AutocompleteItem("#Department", "Usuarios/AutocompleteDepartamento", "Get");
+    AutocompleteItem("#Company", "AutocompleteCompany", "Get");
+    AutocompleteItem("#Department", "AutocompleteDepartamento", "Get");
 
     function AutocompleteItem(item, urlWS, metodo, op) {
         $(item).autocomplete({
@@ -675,6 +693,9 @@
                     url: IPWS + urlWS,
                     data: param,
                     dataType: "json",
+                    headers: {
+                        Authorization: 'Bearer ' + Token
+                    },
                     success: function (data) {
                         if (data[0].item != null) {
                             response(data);
@@ -965,7 +986,7 @@
 
     var datosUserTags;
     function getTagsValidar() {
-        var sURL = IPWS + "/Usuarios/validarTag";
+        var sURL = IPWS + "validarTag";
         $.ajax({
             url: sURL,
             dataType: "json",
@@ -977,6 +998,9 @@
                 cors: false
             },
             cache: false,
+            headers: {
+                Authorization: 'Bearer ' + Token
+            },
             success: function (data) {
                 if (data.Status == "ERROR") {
                     Swal.fire('Error!', data.Mensaje, 'error');
@@ -1063,13 +1087,17 @@
                     "IDPerfilUsuario": Rol,
                     "IDArea": Areas,
                 };
-                var sURL = IPWS + "/Usuarios/AddUsuario";
+                var sURL = IPWS + "AddUsuario";
                 $.ajax({
                     url: sURL,
                     dataType: "json",
+                    contentType: 'application/json',
                     type: "POST",
                     async: false,
-                    data: para,
+                    data: JSON.stringify(para),
+                    headers: {
+                        Authorization: 'Bearer ' + Token
+                    },
                     success: function (data) {
                         if (data.Status == "OK") {
                             Swal.fire('OK!', 'THE USER SAVED SUCCESSFULLY!', 'success');

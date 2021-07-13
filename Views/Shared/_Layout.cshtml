@@ -1,7 +1,7 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 <head>
-    <script>var IPWS = "http://localhost:85/";</script>
+    
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <!-- Meta, title, CSS, favicons, etc. -->
     <meta charset="utf-8">
@@ -45,7 +45,41 @@
     <link href="~/Vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css" rel="stylesheet">
     <link href="~/Vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css" rel="stylesheet">
 
+    <style>
+        #overlay {
+            position: fixed;
+            display: none;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgb(8 11 20);
+            z-index: 2;
+            cursor: pointer;
+        }
 
+        #text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            font-size: 50px;
+            color: white;
+            transform: translate(-50%,-50%);
+            -ms-transform: translate(-50%,-50%);
+        }
+
+        #text2 {
+            position: absolute;
+            top: 82%;
+            left: 50%;
+            font-size: 50px;
+            color: white;
+            transform: translate(-50%,-50%);
+            -ms-transform: translate(-50%,-50%);
+        }
+    </style>
 
 </head>
 <body class="nav-md">
@@ -106,8 +140,8 @@
                                 <li>
                                     <a><i class="fa fa-edit"></i> Reports <span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu">
-                                        <li><a href="form.html">Log Session</a></li>
-                                        <li><a href="form_advanced.html">Logger</a></li>
+                                        <li><a href="javascript:UpdateContenedor('Usuarios/AllLogsLogin');">Log Session</a></li>
+                                        <li><a href="javascript:UpdateContenedor('Usuarios/AllLogsGenerales');">Logs Generales</a></li>
                                     </ul>
                                 </li>
 
@@ -237,6 +271,14 @@
             <!-- /top navigation -->
             <!-- page content -->
             <div class="right_col" role="main">
+                <div id="overlay" >
+                    <div id="text">
+                        <div id="text2">LOADING </div>
+                        <img src="https://cdn.dribbble.com/users/19479/screenshots/3844642/untitled-2.gif" alt="Loading Animation by Jordan Flaig on Dribbble" class="n3VNCb" jsname="HiaYvf" jsaction="load:XAeZkd;" data-noaft="1" style="width: 538.667px; height: 404px; margin: 0px;">
+
+                    </div>
+
+                </div>
                 <div id="Contenedor"></div>
                 @RenderBody()
 
@@ -278,7 +320,8 @@
     <!-- Skycons -->
     <script src="~/Vendors/skycons/skycons.js"></script>
     <!-- Flot -->
-    <script src="~/Content/plugins/jquery-ui/jquery-ui.min.js"></script>
+
+
     <script src="~/Vendors/Flot/jquery.flot.js"></script>
     <script src="~/Vendors/Flot/jquery.flot.pie.js"></script>
     <script src="~/Vendors/Flot/jquery.flot.time.js"></script>
@@ -303,7 +346,7 @@
 
     @*<script src="~/Vendors/jQuery-Smart-Wizard/js/jquery.smartWizard.js"></script>*@
 
-<script src="~/Content/plugins/datatables/jquery.dataTables.js"></script>
+    <script src="~/Content/plugins/datatables/jquery.dataTables.js"></script>
     @*<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>*@
     <script src="~/Content/plugins/datatables-buttons/js/buttons.bootstrap4.js"></script>
     <script src="~/Content/plugins/datatables-buttons/js/buttons.flash.js"></script>
@@ -311,9 +354,16 @@
     <script src="~/Content/js/custom.min.js"></script>
     <script src="~/Content/plugins/datatables-buttons/js/buttons.print.js"></script>
     <script src="~/Content/plugins/datatables-buttons/js/dataTables.buttons.js"></script>
+
+    <script src="~/Content/pdfmake/pdfmake/build/pdfmake.js"></script>
+    <script src="~/Content/pdfmake/pdfmake/build/vfs_fonts.js"></script>
+    <script src="~/Content/plugins/jquery-ui/jquery-ui.js"></script>
+
+
     @RenderSection("scripts", required: false)
-    <script>
+<script>
         function UpdateContenedor(menu) {
+            on();
             interfaz = menu;
             var urlAdd = menu;
             $('#Contenedor').empty();
@@ -326,7 +376,8 @@
                 //data: datos,
                 success: function (data) {
                     $('#Contenedor').html(data);
-
+                    setTimeout(off, 1000);
+                    //off();
                     //showPage();
 
                     //jsRemoveWindowLoad();
@@ -338,7 +389,17 @@
             });
         }
         UpdateContenedor('Home/home');
-    </script>
+
+        function on() {
+            document.getElementById("overlay").style.display = "block";
+        }
+
+        function off() {
+            document.getElementById("overlay").style.display = "none";
+        }
+    var Token = "@ViewBag.User.Token";
+    var IPWS = "http://localhost:51800/Home/users/";
+</script>
 
 </body>
 </html>

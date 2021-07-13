@@ -49,7 +49,19 @@ namespace Portal_Global.Controllers
 
 
 
-      
+        [HttpGet]
+        public ViewResult EditarPerfil(string id)
+        {
+            try
+            {
+                ViewBag.IDPerfil = id;
+                return View("EditarPerfil");
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
 
 
         [HttpGet]
@@ -102,6 +114,32 @@ namespace Portal_Global.Controllers
             try
             {
                 return View("../Usuarios/NuevoPerfil");
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        [HttpGet]
+        public ViewResult AllLogsLogin()
+        {
+            try
+            {
+                return View("../Usuarios/AllLogsLogin");
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        [HttpGet]
+        public ViewResult AllLogsGenerales()
+        {
+            try
+            {
+                return View("../Usuarios/AllLogsGenerales");
             }
             catch (Exception ex)
             {

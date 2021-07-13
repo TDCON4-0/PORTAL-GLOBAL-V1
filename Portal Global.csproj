@@ -351,6 +351,7 @@
     <Content Include="Content\image\logo.svg" />
     <Content Include="Content\image\logo2.svg" />
     <Content Include="Content\image\logo3.png" />
+    <Content Include="Content\image\logogrisM.png" />
     <Content Include="Content\image\Logo_black_190x50.png" />
     <Content Include="Content\image\logo_office365w.png" />
     <Content Include="Content\image\Logo_Web_1_Launcher.png" />
@@ -364,6 +365,36 @@
     <Content Include="Content\js\custom.min.js" />
     <Content Include="Content\LoginPortal.css" />
     <Content Include="Content\main.css" />
+    <Content Include="Content\pdfmake\pdfmake\build\pdfmake.js" />
+    <Content Include="Content\pdfmake\pdfmake\build\pdfmake.min.js" />
+    <Content Include="Content\pdfmake\pdfmake\build\vfs_fonts.js" />
+    <Content Include="Content\pdfmake\pdfmake\gulpfile.js" />
+    <Content Include="Content\pdfmake\pdfmake\src\browser-extensions\pdfMake.js" />
+    <Content Include="Content\pdfmake\pdfmake\src\browser-extensions\URLBrowserResolver.js" />
+    <Content Include="Content\pdfmake\pdfmake\src\browser-extensions\virtual-fs.js" />
+    <Content Include="Content\pdfmake\pdfmake\src\columnCalculator.js" />
+    <Content Include="Content\pdfmake\pdfmake\src\docMeasure.js" />
+    <Content Include="Content\pdfmake\pdfmake\src\docPreprocessor.js" />
+    <Content Include="Content\pdfmake\pdfmake\src\documentContext.js" />
+    <Content Include="Content\pdfmake\pdfmake\src\elementWriter.js" />
+    <Content Include="Content\pdfmake\pdfmake\src\fontProvider.js" />
+    <Content Include="Content\pdfmake\pdfmake\src\helpers.js" />
+    <Content Include="Content\pdfmake\pdfmake\src\imageMeasure.js" />
+    <Content Include="Content\pdfmake\pdfmake\src\layoutBuilder.js" />
+    <Content Include="Content\pdfmake\pdfmake\src\line.js" />
+    <Content Include="Content\pdfmake\pdfmake\src\pageElementWriter.js" />
+    <Content Include="Content\pdfmake\pdfmake\src\pdfKitEngine.js" />
+    <Content Include="Content\pdfmake\pdfmake\src\printer.js" />
+    <Content Include="Content\pdfmake\pdfmake\src\qrEnc.js" />
+    <Content Include="Content\pdfmake\pdfmake\src\standardPageSizes.js" />
+    <Content Include="Content\pdfmake\pdfmake\src\styleContextStack.js" />
+    <Content Include="Content\pdfmake\pdfmake\src\svgMeasure.js" />
+    <Content Include="Content\pdfmake\pdfmake\src\tableProcessor.js" />
+    <Content Include="Content\pdfmake\pdfmake\src\textDecorator.js" />
+    <Content Include="Content\pdfmake\pdfmake\src\textTools.js" />
+    <Content Include="Content\pdfmake\pdfmake\src\traversalTracker.js" />
+    <Content Include="Content\pdfmake\pdfmake\webpack-standardfonts.config.js" />
+    <Content Include="Content\pdfmake\pdfmake\webpack.config.js" />
     <Content Include="Content\plugins\bootstrap-colorpicker\css\bootstrap-colorpicker.css" />
     <Content Include="Content\plugins\bootstrap-colorpicker\css\bootstrap-colorpicker.min.css" />
     <Content Include="Content\plugins\bootstrap-colorpicker\js\bootstrap-colorpicker.js" />
@@ -2387,6 +2418,11 @@
       <DependentUpon>Tablas.edmx</DependentUpon>
     </Content>
     <Content Include="Content\image\user3.webp" />
+    <Content Include="Content\pdfmake\pdfmake\build\pdfmake.js.map" />
+    <Content Include="Content\pdfmake\pdfmake\build\pdfmake.min.js.map" />
+    <Content Include="Content\pdfmake\pdfmake\LICENSE" />
+    <Content Include="Content\pdfmake\pdfmake\package.json" />
+    <Content Include="Content\pdfmake\pdfmake\README.md" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -7126,11 +7162,9 @@
     <Content Include="Vendors\validator\package.json" />
     <Content Include="Vendors\validator\README.md" />
     <Content Include="Views\Usuarios\NuevoUsuario.cshtml" />
-    <Content Include="Views\Usuarios\TablaUsuarios.cshtml" />
     <Content Include="Views\Usuarios\EditarUsuario.cshtml" />
     <Content Include="Views\Usuarios\ProfileUser.cshtml" />
     <Content Include="Views\Usuarios\AllUsuarios.cshtml" />
-    <Content Include="Views\Usuarios\PerfilUsuarios.cshtml" />
     <Content Include="Views\Usuarios\NuevoPerfil.cshtml" />
     <Content Include="Views\Catalogos\AddAreas.cshtml" />
     <Content Include="Views\Catalogos\AddCompanias.cshtml" />
@@ -7150,6 +7184,10 @@
     <Content Include="Views\Catalogos\EditEdificios.cshtml" />
     <Content Include="Views\Catalogos\EditModule.cshtml" />
     <Content Include="Views\Catalogos\EditSystem.cshtml" />
+    <Content Include="Views\Usuarios\EliminarUsuario.cshtml" />
+    <Content Include="Views\Usuarios\AllLogsLogin.cshtml" />
+    <Content Include="Views\Usuarios\AllLogsGenerales.cshtml" />
+    <Content Include="Views\Usuarios\EditarPerfil.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

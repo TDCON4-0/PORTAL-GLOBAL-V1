@@ -21,6 +21,7 @@ namespace Portal_Global.Controllers
                 if (UserData != null && UserData.UserName != null && UserData.UserName != "")
                 {
                     ViewBag.User = UserData;
+                    //ViewBag.ObjUser = UserData;
                     return View(UserData);
                 }
                 else

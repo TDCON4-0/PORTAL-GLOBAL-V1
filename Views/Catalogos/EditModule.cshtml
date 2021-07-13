@@ -478,13 +478,17 @@
             "ID": @ViewBag.ID,
 
         };
-        var sURL = IPWS + "Usuarios/getModule";
+        var sURL = IPWS + "getModule";
         $.ajax({
             url: sURL,
             dataType: "json",
-            type: "GET",
+            contentType: 'application/json',
+            type: "POST",
             async: false,
-            data: para,
+            data: JSON.stringify(para),
+            headers: {
+                Authorization: 'Bearer ' + Token
+            },
             success: function (data) {
                 if (data[0].ID != null) {
                      datosModule = data;
@@ -534,13 +538,17 @@
             confirmButtonText: 'YES, UPDATE IT!'
         }).then((result) => {
             if (result.isConfirmed) {
-                var sURL = IPWS + "/Usuarios/UpdateModule";
+                var sURL = IPWS + "UpdateModule";
                 $.ajax({
                     url: sURL,
                     dataType: "json",
+                    contentType: 'application/json',
                     type: "POST",
                     async: false,
-                    data: para,
+                    data: JSON.stringify(para),
+                    headers: {
+                        Authorization: 'Bearer ' + Token
+                    },
                     success: function (data) {
 
                         if (data.Status == "OK") {

@@ -478,13 +478,17 @@
             "ID": @ViewBag.ID,
 
         };
-        var sURL = IPWS + "Usuarios/getDepartment";
+        var sURL = IPWS + "getDepartment";
         $.ajax({
             url: sURL,
             dataType: "json",
-            type: "GET",
+            contentType: 'application/json',
+            type: "POST",
             async: false,
-            data: para,
+            data: JSON.stringify(para),
+            headers: {
+                Authorization: 'Bearer ' + Token
+            },
             success: function (data) {
                 if (data[0].ID != null) {
                      datosDepartment = data;
@@ -535,13 +539,17 @@
             confirmButtonText: 'YES, UPDATE IT!'
         }).then((result) => {
             if (result.isConfirmed) {
-                    var sURL = IPWS + "/Usuarios/UpdateDepartments";
+                    var sURL = IPWS + "UpdateDepartments";
                     $.ajax({
                         url: sURL,
                         dataType: "json",
+                        contentType: 'application/json',
                         type: "POST",
                         async: false,
-                        data: para,
+                        data: JSON.stringify(para),
+                        headers: {
+                            Authorization: 'Bearer ' + Token
+                        },
                         success: function (data) {
 
                             if (data.Status == "OK") {

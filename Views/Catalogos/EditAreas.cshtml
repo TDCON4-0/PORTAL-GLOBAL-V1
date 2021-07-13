@@ -478,13 +478,21 @@
             "ID": @ViewBag.ID,
 
         };
-        var sURL = IPWS + "Usuarios/getAreas";
+        var sURL = IPWS + "getAreas";
         $.ajax({
             url: sURL,
             dataType: "json",
-            type: "GET",
+
+            type: "POST",
+            data: JSON.stringify(para),
+            contentType: 'application/json; charset=utf-8',
             async: false,
-            data: para,
+
+            //contentType: "application/json",
+            headers: {
+
+                Authorization: 'Bearer ' + Token
+            },
             success: function (data) {
                 if (data[0].ID != null) {
                      datosAreas = data;
@@ -536,13 +544,16 @@
             confirmButtonText: 'YES, UPDATE IT!'
         }).then((result) => {
             if (result.isConfirmed) {
-                var sURL = IPWS + "/Usuarios/UpdateAreas";
+                var sURL = IPWS + "UpdateAreas";
                 $.ajax({
                     url: sURL,
                     dataType: "json",
                     type: "POST",
                     async: false,
                     data: para,
+                    headers: {
+                        Authorization: 'Bearer ' + Token
+                    },
                     success: function (data) {
 
                         if (data.Status == "OK") {

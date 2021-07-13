@@ -482,12 +482,15 @@
 
     function FillBuilding() {
 
-        var sURL = IPWS + "Usuarios/getAllBuilding";
+        var sURL = IPWS + "getAllBuilding";
         $.ajax({
             url: sURL,
             dataType: "json",
             type: "GET",
             async: false,
+            headers: {
+                Authorization: 'Bearer ' + Token
+            },
             success: function (data) {
                 if (data[0].ID != null) {
                     Building = data;
@@ -533,13 +536,17 @@
             confirmButtonText: 'YES, SAVE IT!'
         }).then((result) => {
             if (result.isConfirmed) {
-                var sURL = IPWS + "/Usuarios/AddSystem";
+                var sURL = IPWS + "AddSystem";
                 $.ajax({
                     url: sURL,
                     dataType: "json",
-                    type: "GET",
+                    contentType: 'application/json',
+                    type: "POST",
                     async: false,
-                    data: para,
+                    data: JSON.stringify(para),
+                    headers: {
+                        Authorization: 'Bearer ' + Token
+                    },
                     success: function (data) {
 
                         if (data.Status == "OK") {

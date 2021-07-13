@@ -404,13 +404,16 @@
                     "Id": "@ViewBag.IDUsuario",
                     "Status": "@ViewBag.Status",
                 };
-                var sURL = IPWS + "/Usuarios/DeleteUsuario";
+                var sURL = IPWS + "DeleteUsuario";
                 $.ajax({
                     url: sURL,
                     dataType: "json",
                     type: "POST",
                     async: false,
                     data: para,
+                    headers: {
+                        Authorization: 'Bearer ' + Token
+                    },
                     success: function (data) {
                         if (data.Status == "OK") {
                             Swal.fire('OK!', 'THE USER DELETE SUCCESSFULLY!', 'success');

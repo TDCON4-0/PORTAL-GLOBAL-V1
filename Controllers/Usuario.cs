@@ -13,8 +13,8 @@ namespace Portal_Global.Controllers
         public string SecondLastName { get; set; }
         public string UserName { get; set; }
         public string Password { get; set; }
-        public int IdRol { get; set; }
-        public int IdIdioma { get; set; }
+        public Nullable<int> IdRol { get; set; }
+        public Nullable<int> IdIdioma { get; set; }
         public string Telefono { get; set; }
         public string Correo { get; set; }
         public string Status { get; set; }
@@ -23,6 +23,12 @@ namespace Portal_Global.Controllers
         public string Manager { get; set; }
         public string Tag1 { get; set; }
         public string Tag2 { get; set; }
+       // public Nullable<int> IDPerfilUsuario { get; set; }
+       // public Nullable<int> IDArea { get; set; }
+        public string Token { get; set; }
+        public string _token { get; set; }
+
+        public string TimeOut { get; set; }
 
 
     }

@@ -486,13 +486,17 @@
             "ID": @ViewBag.ID,
 
         };
-        var sURL = IPWS + "Usuarios/getSystem";
+        var sURL = IPWS + "getSystem";
         $.ajax({
             url: sURL,
             dataType: "json",
-            type: "GET",
+            contentType: 'application/json',
+            type: "POST",
             async: false,
-            data: para,
+            data: JSON.stringify(para),
+            headers: {
+                Authorization: 'Bearer ' + Token
+            },
             success: function (data) {
                 if (data[0].ID != null) {
                      datosSystem = data;
@@ -518,12 +522,15 @@
 
     function FillBuilding() {
 
-        var sURL = IPWS + "Usuarios/getAllBuilding";
+        var sURL = IPWS + "getAllBuilding";
         $.ajax({
             url: sURL,
             dataType: "json",
             type: "GET",
             async: false,
+            headers: {
+                Authorization: 'Bearer ' + Token
+            },
             success: function (data) {
                 if (data[0].ID != null) {
                     Building = data;
@@ -571,13 +578,18 @@
             confirmButtonText: 'YES, UPDATE IT!'
         }).then((result) => {
             if (result.isConfirmed) {
-                var sURL = IPWS + "/Usuarios/UpdateSystem";
+                var sURL = IPWS + "UpdateSystem";
                 $.ajax({
                     url: sURL,
                     dataType: "json",
+                    contentType: 'application/json',
                     type: "POST",
+                    data: JSON.stringify(para),
                     async: false,
-                    data: para,
+                    contentType: 'application/json',
+                    headers: {
+                        Authorization: 'Bearer ' + Token
+                    },
                     success: function (data) {
 
                         if (data.Status == "OK") {
